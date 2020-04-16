@@ -1,0 +1,22 @@
+{
+  "name": "on-pdv",
+  "version": "1.0.0",
+  "description": "sistema de frente de caixa para realizar operações de venda de produtos, esse projeto tem o intuito de compor o material de desenvolvimento para avaliação da aula de engenharia de software da unifeso",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "victor veiga",
+  "license": "ISC",
+  "dependencies": {
+    "connect-ensure-login": "^0.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "knex": "^0.20.13",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.0.2",
+    "sqlite3": "^4.1.1"
+  }
+}

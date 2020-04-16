@@ -1,0 +1,115 @@
+/*
+#home_principal {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home_principal .row {
+    width: 100%;
+    padding: 96px;
+    background: #D8D8D8;
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+*/
+#home_principal {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home_principal .botoes {
+    width: 100%;
+    padding: 96px;
+    background: #D8D8D8;
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    border-radius: 8px;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+#home_principal #home_logo h1 {
+    display: inline;
+    cursor: pointer;
+}
+
+.botoes .myBotao {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 3px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: box-shadow 0.2s;
+    transition: opacity 0.2s;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botoes .myBotao .texto {
+    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+    -webkit-user-select: none;    /* Chrome, Safari 3 */
+    -khtml-user-select: none;     /* Safari 2 */
+    -moz-user-select: none;       /* Firefox */
+    -ms-user-select: none;        /* IE10+ */
+    user-select: none;  
+    color: white;
+    opacity: 1;
+    font-size: large;
+}
+
+.botoes .myBotao:hover {
+    box-shadow: 0 0 30px 1px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+}
+
+.botoes .myBotao:active {
+    opacity: 0.2;
+}
+
+.corCadastro {
+    background-color: #186484;
+}
+
+.corModulo {
+    background-color: #ba3234;
+}   
+
+#home_principal .botoes #home_botoes_rodape {
+    justify-content: flex-end;
+}
+
+#home_principal .botoes #home_botoes_rodape div {
+    display: inline;
+}
+
+#home_principal .botoes #home_botoes_rodape .home_botao_rodape {
+    cursor: pointer;
+    margin-left: 10px;
+    transition: opacity 1s;
+}
+
+#home_principal .botoes #home_botoes_rodape .home_botao_rodape:hover {
+    opacity: 0.8;
+}
+
+#home_principal .botoes #home_botoes_rodape .home_botao_rodape:active {
+    opacity: 0.2;
+}
