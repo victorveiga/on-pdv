@@ -15,7 +15,7 @@ const ProdutoEmFalta       = require('./controllers/ProdutoEmFaltaController');
 
 // Cadastro de usuário
 routes.post('/usuario'       , (req,res) => UsuarioController.create(req,res) );
-routes.get('/usuario'        , valUser.ensureLoggedIn(), (req,res) => UsuarioController.store(req,res)  );
+routes.get('/usuario'        , (req,res) => UsuarioController.store(req,res)  );
 routes.get('/usuario/:id'    , valUser.ensureLoggedIn(), (req,res) => UsuarioController.read(req,res)   );
 routes.put('/usuario/:id'    , valUser.ensureLoggedIn(), (req,res) => UsuarioController.update(req,res) );
 routes.delete('/usuario/:id' , valUser.ensureLoggedIn(), (req,res) => UsuarioController.delete(req,res) );
@@ -43,7 +43,7 @@ routes.delete('/fornecedor/:id' , valUser.ensureLoggedIn(), (req,res) => Fornece
 
 // Cadastro de produtos
 routes.post('/produto'       , valUser.ensureLoggedIn() , (req,res) => ProdutoController.create(req,res) );
-routes.get('/produto'        , valUser.ensureLoggedIn() , (req,res) => ProdutoController.store(req,res)  );
+routes.get('/produto'        , (req,res) => ProdutoController.store(req,res)  );
 routes.get('/produto/:id'    , valUser.ensureLoggedIn() , (req,res) => ProdutoController.read(req,res)   );
 routes.put('/produto/:id'    , valUser.ensureLoggedIn() , (req,res) => ProdutoController.update(req,res) );
 routes.delete('/produto/:id' , valUser.ensureLoggedIn() , (req,res) => ProdutoController.delete(req,res) );

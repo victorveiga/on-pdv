@@ -1,0 +1,18 @@
+#tabela_selecao th {
+    font-weight: bold;
+}
+
+#tabela_selecao tbody tr {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#tabela_selecao tbody tr:hover {
+    background-color: gainsboro;
+}
+
+#tabela_selecao tbody tr:active {
+    background-color: grey;
+    opacity: 0.5;
+    color: white;
+}

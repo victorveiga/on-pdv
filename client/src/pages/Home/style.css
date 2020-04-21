@@ -63,12 +63,7 @@
     justify-content: center;
 }
 
-.botoes .myBotao .texto {
-    -webkit-touch-callout: none;  /* iPhone OS, Safari */
-    -webkit-user-select: none;    /* Chrome, Safari 3 */
-    -khtml-user-select: none;     /* Safari 2 */
-    -moz-user-select: none;       /* Firefox */
-    -ms-user-select: none;        /* IE10+ */
+.botoes .textoSemSelecao {
     user-select: none;  
     color: white;
     opacity: 1;
