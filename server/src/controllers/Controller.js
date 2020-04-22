@@ -17,7 +17,7 @@ class Controller {
             .orderBy('id')
            
         let total = count['count']
-        res.header('X-Total-Count', total)    
+        res.header('total', total)    
         return res.status(200).json(resultado);
     }
     

@@ -6,10 +6,24 @@ import JanelaModal from './JanelaModal';
 export default function JanelaProduto(props) {
 
     const [produtos, setProdutos] = useState([]);
+    const [page, setPage] = useState(1);
+    let qtde = 0;
 
     async function handleProdutos(){
-        const response = await api.get('produto');
+        const response = await api.get(`produto?page=${page}`);
+        console.log(response.headers['count']);
+        console.log(response);
         setProdutos(response.data);
+    }
+
+    function montarFormulario(data){
+        return (
+            <div>
+                <span>
+                    Eu sou um formulario
+                </span>
+            </div>
+        );
     }
 
     function montarSelecao(){
@@ -18,6 +32,7 @@ export default function JanelaProduto(props) {
                 NomesCamposSelecao={['#', 'Código', 'Descrição', 'Preço']}
                 CamposSelecao={['id', 'codigoBarras', 'nome', 'preco']}
                 DataSelecao={produtos}
+                montarFormulario={montarFormulario}
             />
         );
     }

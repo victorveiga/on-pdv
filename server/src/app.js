@@ -3,6 +3,10 @@ const express  = require('express');
 const app      = express();
 const cors     = require('cors');
 
+const corsOptions = {
+    exposedHeaders: 'Authorization'
+}
+
 // internas
 const routes   = require('./routes');
 const UsuarioController = require('./controllers/UsuarioController');
@@ -31,7 +35,15 @@ passport.deserializeUser((id, cb) => {
     })
 })
 
-app.use(cors());
+
+app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    //app.use(cors(corsOptions));
+    next();
+})
+
 app.use(express.json());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
