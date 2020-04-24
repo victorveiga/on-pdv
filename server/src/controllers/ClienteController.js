@@ -8,7 +8,7 @@ class ClienteController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res);
+        return super.store(req,res, ['nome', 'email', 'cpf']);
     }
     
     create(req, res){

@@ -8,7 +8,7 @@ class ProdutoController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res);
+        return super.store(req,res, ['nome', 'codigoBarras', 'codigoReferencia']);
     }
     
     create(req, res){

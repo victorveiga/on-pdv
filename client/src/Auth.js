@@ -1,7 +1,7 @@
 export const isAuthenticated = ()=>{
-    const nome_usuario = localStorage.getItem('on-pdv-user-nome')
+    const token = localStorage.getItem('auth-token');
 
-    if ((!nome_usuario)||(nome_usuario===null)||(nome_usuario === '')){
+    if ((!token)||(token===null)||(token === '')){
         return false
     }
     

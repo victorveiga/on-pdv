@@ -1,11 +1,8 @@
-import React, { useState , useEffect} from 'react';
-import {Modal, Button, Table, Form} from 'react-bootstrap/';
+import React from 'react';
+import {Modal, Button} from 'react-bootstrap/';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import api from '../services/api';
 
 export default function JanelaModal(props) {
-
-    const {Titulo, montarSelecao} = props;
 
     return (
       <Modal
@@ -16,14 +13,14 @@ export default function JanelaModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Cadastro de {Titulo}
+            Cadastro de {props.titulo}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {montarSelecao()}
+          {props.content}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button onClick={props.onHide}>Fechar</Button>
         </Modal.Footer>
       </Modal>
     );

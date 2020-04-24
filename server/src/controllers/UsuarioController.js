@@ -9,7 +9,7 @@ class UsuarioController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res);
+        return super.store(req,res, ['nome', 'nomeUsuario', 'cpf']);
     }
     
     create(req, res){
@@ -28,19 +28,9 @@ class UsuarioController extends Controller {
         return super.delete(req,res);
     }
 
-    async findByUsername(nome, cb){
+    async findByUsername(nome){
         let record = await banco_local(USUARIOS).select().where('nomeUsuario', 'like', `%${nome}%`);
-        record     = record[0]
-        
-        if (!record){ // Se não encontrar o registro
-            return cb(null,null)
-        }
-
-        if (record.nomeUsuario != nome){
-            return cb(null, null)
-        }
-
-        return cb(null, record)
+        return record[0];
     }
 
     async findById(id,cb){

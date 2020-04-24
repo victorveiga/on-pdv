@@ -6,13 +6,23 @@ class Controller {
         this.tabela = tabela
     }
 
-    async store(req, res){
+    async store(req, res, colunas){
 
         const {page = 1} = req.query;
-        const [count] = await banco(this.tabela).count();
+        const {search=''} = req.headers;
+        
+        const [count] = await banco(this.tabela)
+                            .where(colunas[0], 'like', `%${search}%`)
+                            .orWhere(colunas[1], 'like', `%${search}%`)
+                            .orWhere(colunas[2], 'like', `%${search}%`)
+                            .count();
+
         const resultado = await banco(this.tabela)
             .offset((page-1) * 5)
             .select('*')
+            .where(colunas[0], 'like', `%${search}%`)
+            .orWhere(colunas[1], 'like', `%${search}%`)
+            .orWhere(colunas[2], 'like', `%${search}%`)
             .limit(5)
             .orderBy('id')
            

@@ -14,15 +14,15 @@ export default ()=>{
     async function handleLogin(e) {
         e.preventDefault();
         try {
-            const response = await api.post('logon', {username, password});
+            const response = await api.post('authenticate', {username, password});
         
-            if ((!response.data.id) || (response.data.id === null) || (response.data.id === undefined)){
+            if ((!response.data.token) || (response.data.token === null) || (response.data.token === undefined)){
                 alert('Usuário não encontrado, tente novamente.');
                 return
             }
 
             localStorage.setItem('on-pdv-user-nome', response.data.nome);
-            localStorage.setItem('on-pdv-user-id', response.data.id);
+            localStorage.setItem('auth-token', response.data.token);
             localStorage.setItem('on-pdv-user-nome-usuario', response.data.nomeUsuario);
 
             history.push('/home');

@@ -8,7 +8,7 @@ class FornecedorController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res);
+        return super.store(req,res, ['nome', 'email', 'email']);
     }
     
     create(req, res){

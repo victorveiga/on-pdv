@@ -4,54 +4,77 @@ import './style.css';
 import '../../global.css';
 import logo from '../../assets/logo.png';
 import {useHistory} from 'react-router-dom';
-import api from '../../services/api';
 import {FaSignOutAlt} from 'react-icons/fa';
 import {AiFillSetting} from 'react-icons/ai';
 
 // Janelas
-import JanelaProduto from '../../Components/JanelaProduto';
-import JanelaUsuario from '../../Components/JanelaUsuario';
+import JanelaProduto from '../../Components/Produto/JanelaProduto';
+import JanelaUsuario from '../../Components/Usuario/JanelaUsuario';
+import Cliente from '../../Components/Cliente/JanelaCliente';
+import Fornecedor  from '../../Components/Fornecedor/JanelaFornecedor';
+import Vendedor from '../../Components/Vendedor/JanelaVendedor';
 
 export default () => {
     const [nome, setNome] = useState();
     const history = useHistory();
 
     // estados
-    const [produtoModalShow, setProdutoModalShow] = useState(false);
-    const [usuarioModalShow, setUsuarioModalShow] = useState(false);
+    const [produtoModalShow, setProdutoModalShow]       = useState(false);
+    const [usuarioModalShow, setUsuarioModalShow]       = useState(false);
+    const [clienteModalShow, setClienteModalShow]       = useState(false);
+    const [fornecedorModalShow, setFornecedorModalShow] = useState(false);
+    const [vendedorModalShow, setVendedorModalShow]     = useState(false);
     
 
     useEffect(()=>{
         const nome_usuario = localStorage.getItem('on-pdv-user-nome')
         setNome(nome_usuario);
-    }, [localStorage.getItem('on-pdv-user-id')]);
+    }, []);
 
     async function handleLogout(e){
         e.preventDefault();
-        await api.get('/logout');
         localStorage.clear();
         history.push('/');
     }
 
     return (
         <div>
-            {/* Janela Produto */}
-            <JanelaProduto 
-                show={produtoModalShow}
-                onHide={() => setProdutoModalShow(false)}
-            />
             {/** Janela Usuario */}
             <JanelaUsuario
                 show={usuarioModalShow}
                 onHide={() => setUsuarioModalShow(false)}
             />
+            {/* Janela Produto */}
+            <JanelaProduto 
+                show={produtoModalShow}
+                onHide={() => setProdutoModalShow(false)}
+            />
+            
+            {/* Janela Cliente */}
+            <Cliente
+                show={clienteModalShow}
+                onHide={() => setClienteModalShow(false)}
+            />
+
+            {/* Janela Fornecedor */}
+            <Fornecedor
+                show={fornecedorModalShow}
+                onHide={() => setFornecedorModalShow(false)}
+            />
+
+            {/* Janela Vendedor */}
+            <Vendedor
+                show={vendedorModalShow}
+                onHide={() => setVendedorModalShow(false)}
+            />
+
             <div className="container" id="home_principal">
                 <div row="row">
                     <div className="botoes">
 
                         <div className="row">
                             <div className="col-md-12" id="home_logo">
-                                <h1><img src={logo} height="80px" width="80px"/></h1>
+                                <h1><img src={logo} height="80px" width="80px" alt="logo"/></h1>
                                 <span className="lead">ON-PDV</span>
                             </div>
                         </div>
@@ -66,13 +89,13 @@ export default () => {
                             <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setUsuarioModalShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Usuários</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corCadastro">
+                            <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setVendedorModalShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Vendedores</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corCadastro">
+                            <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setClienteModalShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Clientes</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corCadastro">
+                            <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setFornecedorModalShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Fornecedores</h4>
                             </div>
                         </div>

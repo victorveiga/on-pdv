@@ -1,52 +1,75 @@
-import React from 'react';
-import {Button, Table, Form} from 'react-bootstrap/';
+import React, { useState } from 'react';
+import {Button, Table, Form, Pagination} from 'react-bootstrap/';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Selecao.css';
 
 export default function Selecao(props){
 
-    const {NomesCamposSelecao, CamposSelecao, DataSelecao, montarFormulario} = props;
+    const [pesquisa, setPesquisa] = useState('');
+
+    let tabela_selecao_thead_key=0;
+    let tabela_selecao_tbody_td_key=0;
+
+    const {
+        NomesCamposSelecao, 
+        CamposSelecao, 
+        DataSelecao, 
+        formularioNovo, 
+        formularioEditar,
+        maxPage,
+        activePage,
+        carregar
+    } = props;
+
+    function handlePaginacao(){
+        let items = [];
+        for (let number = 1; number <= maxPage; number++) {
+          items.push(
+            <Pagination.Item key={number} active={number === activePage} onClick={() => {carregar(number)}}>
+              {number}
+            </Pagination.Item>,
+          );
+        }
+
+        return (
+          <Pagination className="justify-content-center">{items}</Pagination>
+        );
+    }
 
     return (
         <div>
           <Form className="form-inline mb-2">
-            <input className="form-control" type="text" placeholder="Pesquise aqui"/>
-            <Button className="ml-2" variant={"outline-dark"}>Pesquisar</Button>
-            <Button className="ml-2" variant={"outline-dark"} onClick={montarFormulario}>Criar Novo</Button>
+            <input 
+                className="form-control" 
+                type="text" 
+                placeholder="Pesquise aqui"
+                value={pesquisa}
+                onChange={e => setPesquisa(e.target.value)}
+            />
+            <Button className="ml-2" variant={"outline-dark"} onClick={() => {carregar(1, pesquisa)}}>Pesquisar</Button>
+            <Button className="ml-2" variant={"outline-dark"} onClick={formularioNovo}>Criar Novo</Button>
           </Form>
 
           <Table striped={true} id={"tabela_selecao"}>
               <thead>
                     <tr>
                         {NomesCamposSelecao.map(campo => (
-                            <th>{campo}</th>
+                            <th key={++tabela_selecao_thead_key}>{campo}</th>
                         ))}
                     </tr>
               </thead>
               <tbody>
                 {DataSelecao.map(data => (
-                  <tr className="textoSemSelecao">
+                  <tr key={data['id']} className="textoSemSelecao" onClick={()=> {formularioEditar(data)}}>
                     {CamposSelecao.map(campo => (
-                        <td>{data[campo]}</td>
+                        <td key={tabela_selecao_tbody_td_key++}>{data[campo]}</td>
                     ))}
                   </tr>
                 ))}
               </tbody>
             </Table>
 
-            <nav aria-label="Navegação de página exemplo">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Próximo</a>
-                </li>
-              </ul>
-            </nav>
+            {handlePaginacao()}
           </div>
       );
 }
