@@ -3,7 +3,6 @@ import JanelaModal from '../JanelaModal';
 import Selecao from '../Selecao';
 import api from '../../services/api';
 import FormularioUsuario from './FormularioUsuario';
-import { useHistory } from 'react-router-dom';
 
 class JanelaUsuario extends Component {
 
@@ -35,7 +34,7 @@ class JanelaUsuario extends Component {
         } catch(err){
             alert(err)
             localStorage.clear();
-            useHistory().push('/');
+            window.location.reload();
         }
     }
 
