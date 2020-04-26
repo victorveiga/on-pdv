@@ -2,17 +2,20 @@ import React, {Component} from 'react';
 import JanelaModal from '../JanelaModal';
 import Selecao from '../Selecao';
 import api from '../../services/api';
-import FormularioUsuario from './FormularioUsuario';
+import FormularioProdutoEmFalta from './FormularioProdutoEmFalta';
 import { useHistory } from 'react-router-dom';
 
-class JanelaUsuario extends Component {
+class JanelaProduto extends Component {
 
     constructor(props){
         super(props);
 
+        // Formulário para resgatar um registro
+        this.selecionarRegistro = props.selecionarRegistro;
+
         this.state = {
             content: null,
-            usuarios: null,
+            produtos: null,
             activePage: 1,
             maxPage: 1
         }
@@ -20,9 +23,9 @@ class JanelaUsuario extends Component {
         this.renderSelecao = () => { this.setState({content: this.handleSelecao()}) };
     }
 
-    async getUsuarios(page=1, texto_search=''){
+    async getProdutos(page=1, texto_search=''){
         try {
-            const response = await api.get(`usuario?page=${page}`, {headers: {
+            const response = await api.get(`produtoFalta?page=${page}`, {headers: {
                 authorization: 'Bearer '+localStorage.getItem('auth-token'),
                 search: texto_search
             }});
@@ -30,36 +33,39 @@ class JanelaUsuario extends Component {
             this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
             this.setState({activePage: page })
 
-            this.setState({usuarios: response.data});
+            this.setState({produtos: response.data});
             this.setState({content: this.handleSelecao()})
         } catch(err){
             alert(err)
-            localStorage.clear();
-            useHistory().push('/');
-        }
+            localStorage.clear()
+            useHistory().push('/')
+        } 
     }
 
     handleSelecao(){
+        // Formulário para editar o registro
+        const formularioEditar = (data) => {this.handleFormulario(this,data)}
+
         return (
             <Selecao
-                NomesCamposSelecao={['#', 'Nome', 'Nome de Usuário', 'E-mail']}
-                CamposSelecao={['id', 'nome', 'nomeUsuario', 'email']}
-                DataSelecao={this.state.usuarios}
+                NomesCamposSelecao={['#', 'Nome', 'Data Falta', 'Nome Cliente']}
+                CamposSelecao={['id', 'nome', 'dataFalta', 'nomeCliente']}
+                DataSelecao={this.state.produtos}
                 formularioNovo={() => {this.handleFormulario(this)}}
-                formularioEditar={(data) => {this.handleFormulario(this,data)}}
+                formularioEditar={this.selecionarRegistro?this.selecionarRegistro:formularioEditar}
                 maxPage={this.state.maxPage}
                 activePage={this.state.activePage}
-                carregar={(page, search) => {this.getUsuarios(page,search)}}
+                carregar={(page, search) => {this.getProdutos(page,search)}}
             />
         );
     }
 
     handleFormulario(classe, data){
         classe.setState ({content:
-            <FormularioUsuario
-                cancelar={classe.renderSelecao}
-                dados={data}
-                carregar={(page) => {this.getUsuarios(page)}}
+            <FormularioProdutoEmFalta
+            cancelar={classe.renderSelecao}
+            dados={data}
+            carregar={(page) => {this.getProdutos(page)}}
             />
         });    
     }
@@ -68,12 +74,12 @@ class JanelaUsuario extends Component {
         return (
             <JanelaModal
                 {...this.props}
-                onShow={() => {this.getUsuarios()}}
+                onShow={() => {this.getProdutos()}}
                 content={this.state.content}
-                titulo={"Usuarios"}
+                titulo={"Produtos em Falta"}
             />
         );
     }  
 }
 
-export default JanelaUsuario;
+export default JanelaProduto;

@@ -1,14 +1,15 @@
 export default class ItemVenda {
 
-    constructor(id=0, codigoBarras='', nome='', quantidade=0, preco=0, desconto=0){
+    constructor(id=0, codigoBarras='', nome='', quantidade=0, preco=0, desconto=0, descontoMaximo=0){
 
-        this.identificador = Math.ceil(Math.random() * 1000000);
-        this.id            = id;
-        this.codigoBarras  = codigoBarras;
-        this.nome          = nome;
-        this.preco         = preco;
-        this.desconto      = desconto;
-        this.quantidade    = quantidade;
+        this.identificador  = Math.ceil(Math.random() * 1000000);
+        this.id             = id;
+        this.codigoBarras   = codigoBarras;
+        this.nome           = nome;
+        this.preco          = preco;
+        this.desconto       = desconto;
+        this.quantidade     = quantidade;
+        this.descontoMaximo = descontoMaximo;
     }
 
     setId(id){ this.id = id }
@@ -16,7 +17,13 @@ export default class ItemVenda {
     setNome(nome){ this.nome = nome; }
     setQuantidade(quantidade){ this.quantidade = quantidade; }
     setPreco(preco){ this.preco = preco; }
-    setDesconto(desconto){ this.desconto = desconto; }
+    setDesconto(desconto){ 
+
+        if ((this.getDescontoMaximo() > 0)&&(desconto > this.getDescontoMaximo()))
+            this.desconto = this.getDescontoMaximo(); 
+        else    
+            this.desconto = desconto; 
+    }
 
     getIdentificador(){ return this.identificador }
     getId(){ return this.id }
@@ -25,6 +32,17 @@ export default class ItemVenda {
     getQuantidade(){ return this.quantidade }
     getPreco(){ return this.preco }
     getDesconto(){ return this.desconto }
+    getDescontoMaximo(){ 
+        if ((!this.descontoMaximo) || (this.descontoMaximo === null) || (this.descontoMaximo === '')){
+            return 0
+        }
+
+        return this.descontoMaximo 
+    }
+
+    getSubTotalItem(){
+        return this.getPreco() * this.getQuantidade();
+    }
     
     getTotalItem(){ 
         let valor = this.getPreco() * this.getQuantidade();

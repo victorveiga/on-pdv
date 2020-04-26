@@ -5,6 +5,8 @@ const CLIENTES = 'clientes';
 const PRODUTOS = 'produtos';
 const PRODUTOS_EM_FALTA = 'produtos_em_falta';
 const PROPRIETARIO = 'proprietarios';
+const VENDA = 'vendas';
+const VENDA_ITEM = 'vendas_itens'
 
 module.exports = {
     USUARIOS,
@@ -13,5 +15,7 @@ module.exports = {
     CLIENTES,
     PRODUTOS, 
     PRODUTOS_EM_FALTA,
-    PROPRIETARIO
+    PROPRIETARIO,
+    VENDA,
+    VENDA_ITEM
 }

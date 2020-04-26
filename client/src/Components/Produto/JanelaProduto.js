@@ -3,6 +3,7 @@ import JanelaModal from '../JanelaModal';
 import Selecao from '../Selecao';
 import api from '../../services/api';
 import FormularioProduto from './FormularioProduto';
+import { useHistory } from 'react-router-dom';
 
 class JanelaProduto extends Component {
 
@@ -23,17 +24,22 @@ class JanelaProduto extends Component {
     }
 
     async getProdutos(page=1, texto_search=''){
-        
-        const response = await api.get(`produto?page=${page}`, {headers: {
-            authorization: 'Bearer '+localStorage.getItem('auth-token'),
-            search: texto_search
-        }});
+        try {
+            const response = await api.get(`produto?page=${page}`, {headers: {
+                authorization: 'Bearer '+localStorage.getItem('auth-token'),
+                search: texto_search
+            }});
 
-        this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
-        this.setState({activePage: page })
+            this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
+            this.setState({activePage: page })
 
-        this.setState({produtos: response.data});
-        this.setState({content: this.handleSelecao()})
+            this.setState({produtos: response.data});
+            this.setState({content: this.handleSelecao()})
+        } catch(err){
+            alert(err)
+            localStorage.clear()
+            useHistory().push('/')
+        } 
     }
 
     handleSelecao(){

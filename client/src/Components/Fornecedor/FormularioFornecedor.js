@@ -48,6 +48,7 @@ class FormularioFornecedor extends Component {
                 }
             });  
         } else {
+            delete dados.id;
             response = await api.post(`fornecedor`, dados, {
                 headers: {
                     authorization: 'Bearer '+localStorage.getItem('auth-token')
@@ -89,6 +90,7 @@ class FormularioFornecedor extends Component {
                             value={this.state.cnpj}
                             onChange={e => this.setState({cnpj: e.target.value})}
                             required
+                            maxLength="15"
                         />
                     </div>
                     <div className="form-group col-md-6">

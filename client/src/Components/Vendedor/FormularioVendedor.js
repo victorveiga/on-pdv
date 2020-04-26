@@ -54,6 +54,7 @@ class FormularioVendedor extends Component {
                 }
             });  
         } else {
+            delete dados.id;
             response = await api.post(`vendedor`, dados, {
                 headers: {
                     authorization: 'Bearer '+localStorage.getItem('auth-token')
@@ -109,6 +110,7 @@ class FormularioVendedor extends Component {
                             value={this.state.cpf}
                             onChange={e => this.setState({cpf: e.target.value})}
                             required
+                            maxLength="11"
                         />
                     </div>
                 </div>

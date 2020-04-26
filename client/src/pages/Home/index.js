@@ -13,6 +13,7 @@ import JanelaUsuario from '../../Components/Usuario/JanelaUsuario';
 import Cliente from '../../Components/Cliente/JanelaCliente';
 import Fornecedor  from '../../Components/Fornecedor/JanelaFornecedor';
 import Vendedor from '../../Components/Vendedor/JanelaVendedor';
+import ProdutoEmFalta from '../../Components/ProdutosEmFalta/JanelaProdutosEmFalta';
 
 export default () => {
     const [nome, setNome] = useState();
@@ -24,8 +25,8 @@ export default () => {
     const [clienteModalShow, setClienteModalShow]       = useState(false);
     const [fornecedorModalShow, setFornecedorModalShow] = useState(false);
     const [vendedorModalShow, setVendedorModalShow]     = useState(false);
+    const [produtosEmFaltaShow, setProdutosEmFaltaShow] = useState(false);
     
-
     useEffect(()=>{
         const nome_usuario = localStorage.getItem('on-pdv-user-nome')
         setNome(nome_usuario);
@@ -68,6 +69,12 @@ export default () => {
                 onHide={() => setVendedorModalShow(false)}
             />
 
+            {/** Janela de produtos em falat */}
+            <ProdutoEmFalta
+                show={produtosEmFaltaShow}
+                onHide={() => setProdutosEmFaltaShow(false)}
+            />
+
             <div className="container" id="home_principal">
                 <div row="row">
                     <div className="botoes">
@@ -104,7 +111,7 @@ export default () => {
                             <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setProdutoModalShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Produtos</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo">
+                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => setProdutosEmFaltaShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Produtos em Falta</h4>
                             </div>
                             <div className="col px-md-3 p-3 myBotao corModulo">
@@ -112,6 +119,15 @@ export default () => {
                             </div>
                             <div className="col px-md-3 p-3 myBotao corModulo">
                                 <h4 className="textoSemSelecao">Terminal de Vendas</h4>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col px-md-3 p-3 myBotao corCadastro">
+                                <h4 className="textoSemSelecao">Cadastro de Empresas</h4>
+                            </div>
+                            <div className="col px-md-3 p-3 myBotao corModulo">
+                                <h4 className="textoSemSelecao">Relatórios</h4>
                             </div>
                         </div>
 

@@ -10,8 +10,8 @@ export default function JanelaModal(props) {
 
     return (
       <Modal
-        {...props}
         size="xl"
+        {...props}
         aria-labelledby="modal-cadastro"
         centered
       >

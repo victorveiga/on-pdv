@@ -51,6 +51,7 @@ class FormularioCliente extends Component {
                 }
             });  
         } else {
+            delete dados.id;
             response = await api.post(`cliente`, dados, {
                 headers: {
                     authorization: 'Bearer '+localStorage.getItem('auth-token')
@@ -104,6 +105,7 @@ class FormularioCliente extends Component {
                             className="form-control" 
                             placeholder="CPF" 
                             value={this.state.cpf}
+                            maxLength="11"
                             onChange={e => this.setState({cpf: e.target.value})}
                             required
                         />

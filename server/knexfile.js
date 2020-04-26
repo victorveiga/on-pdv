@@ -3,14 +3,21 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: './src/database/db.sqlite'
+      host: 'kbdados.cpyy953qenra.sa-east-1.rds.amazonaws.com',
+      port: '5432',
+      database: 'kbDados',
+      user:     'postgres',
+      password: '9L01oTaVoiDOJQ2S3Wjh'
+    },
+    pool: {
+      min: 2,
+      max: 10
     },
     migrations: {
       directory: './src/database/migrations'
-    },
-    useNullAsDefault: true
+    }
   },
 
   staging: {

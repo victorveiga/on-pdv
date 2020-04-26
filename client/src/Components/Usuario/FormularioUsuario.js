@@ -48,6 +48,7 @@ class FormularioUsuario extends Component {
                 }
             });  
         } else {
+            delete dados.id;
             response = await api.post(`usuario`, dados, {
                 headers: {
                     authorization: 'Bearer '+localStorage.getItem('auth-token')
@@ -103,6 +104,7 @@ class FormularioUsuario extends Component {
                             value={this.state.cpf}
                             onChange={e => this.setState({cpf: e.target.value})}
                             required
+                            maxLength="11"
                         />
                     </div>
                 </div>

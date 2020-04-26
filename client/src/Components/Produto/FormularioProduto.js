@@ -53,6 +53,7 @@ class FormularioProduto extends Component {
                 }
             });  
         } else {
+            delete dados.id;
             response = await api.post(`produto`, dados, {
                 headers: {
                     authorization: 'Bearer '+localStorage.getItem('auth-token')

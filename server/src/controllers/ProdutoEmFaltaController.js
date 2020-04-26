@@ -8,7 +8,7 @@ class ProdutoEmFaltaController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res, ['produto_id', 'dataChegada', 'dataFalta']);
+        return super.store(req,res, ['nome', 'nomeCliente', 'nomeVendedor']);
     }
     
     create(req, res){

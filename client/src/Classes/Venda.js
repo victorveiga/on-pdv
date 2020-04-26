@@ -7,6 +7,15 @@ class Venda {
         this.numero       = 0;
         this.serie        = 0;
         this.xItems       = [];
+        this.vendedor     = {
+            id: 0,
+            nome: ''
+        }
+
+        this.cliente      = {
+            id: 0,
+            nome: ''
+        }
     }
 
     setDataOperacao(dataOperacao){ this.dataOperacao = dataOperacao }
@@ -17,7 +26,25 @@ class Venda {
     getSerie(){ return this.serie }
 
     AddItem(data){
-        this.xItems.push(new ItemVenda(data.id, data.codigoBarras, data.nome, 1, data.preco));
+        this.xItems.push(new ItemVenda(data.id, data.codigoBarras, data.nome, 1, data.preco, 0, data.descontoMaximo));
+    }
+
+    AddVendedor(data){
+        this.vendedor.id   = data.id;
+        this.vendedor.nome = data.nome;
+    }
+
+    AddCliente(data){
+        this.cliente.id   = data.id;
+        this.cliente.nome = data.nome;
+    }
+    
+    getVendedor(){
+        return this.vendedor;
+    }
+
+    getCliente(){
+        return this.cliente;
     }
 
     CalcularTotalBruto(){
@@ -32,7 +59,7 @@ class Venda {
     CalcularDesconto(){
         let total = 0;
         this.xItems.map(item => (
-            total += item.getDesconto() > 0 ? (item.getTotalItem() * (item.getDesconto() / 100)) : 0
+            total += item.getDesconto() > 0 ? (item.getSubTotalItem() * (item.getDesconto() / 100)) : 0
         ))
 
         return total;

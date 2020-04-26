@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaPlusCircle} from 'react-icons/fa';
+import {FaEdit} from 'react-icons/fa';
 import Venda from './Venda';
 
 class VendaController extends Venda {
@@ -9,7 +9,7 @@ class VendaController extends Venda {
         this.alterarQuantidade = alterarQuantidade;
         this.alterarDesconto   = alterarDesconto;
     }
-
+    
     getLinhas(){
         return (<>
 
@@ -17,16 +17,17 @@ class VendaController extends Venda {
                 <tr key={item.getIdentificador()}>
                     <td>{item.getCodigoBarras()}</td>
                     <td>{item.getNome()        }</td>
-                    <td>{item.getPreco()       }</td>
+                    <td>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(item.getPreco())}</td>
                     <td>
-                        <span className="mr-2" style={{cursor: "pointer"}} onClick={() => this.alterarQuantidade(item.getIdentificador())}><FaPlusCircle size={25}/></span>
+                        <span className="mr-2" style={{cursor: "pointer"}} onClick={() => this.alterarQuantidade(item.getIdentificador())}><FaEdit size={25}/></span>
                         {item.getQuantidade()}
                     </td>
                     <td>
-                        <span className="mr-2" style={{cursor: "pointer"}} onClick={() => this.alterarDesconto(item.getIdentificador())}><FaPlusCircle size={25}/></span>
+                        <span className="mr-2" style={{cursor: "pointer"}} onClick={() => this.alterarDesconto(item.getIdentificador())}><FaEdit size={25}/></span>
                         {item.getDesconto()}
                     </td>
-                    <td>{item.getTotalItem()   }</td>
+                    <td>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(item.getPreco() * item.getQuantidade())}</td>
+                    <td>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(item.getTotalItem())}</td>
                 </tr>
             ))}
 

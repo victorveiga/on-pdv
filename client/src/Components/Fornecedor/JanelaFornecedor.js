@@ -3,6 +3,7 @@ import JanelaModal from '../JanelaModal';
 import Selecao from '../Selecao';
 import api from '../../services/api';
 import FormularioFornecedor from './FormularioFornecedor';
+import { useHistory } from 'react-router-dom';
 
 class JanelaFornecedor extends Component {
 
@@ -20,16 +21,22 @@ class JanelaFornecedor extends Component {
     }
 
     async getFornecedores(page=1, texto_search=''){
-        const response = await api.get(`fornecedor?page=${page}`, {headers: {
-            authorization: 'Bearer '+localStorage.getItem('auth-token'),
-            search: texto_search
-        }});
+        try {
+            const response = await api.get(`fornecedor?page=${page}`, {headers: {
+                authorization: 'Bearer '+localStorage.getItem('auth-token'),
+                search: texto_search
+            }});
 
-        this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
-        this.setState({activePage: page })
+            this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
+            this.setState({activePage: page })
 
-        this.setState({Fornecedores: response.data});
-        this.setState({content: this.handleSelecao()})
+            this.setState({Fornecedores: response.data});
+            this.setState({content: this.handleSelecao()})
+        } catch(err){
+            alert(err)
+            localStorage.clear();
+            useHistory().push('/');
+        }
     }
 
     handleSelecao(){

@@ -14,6 +14,7 @@ const ClienteController      = require('./controllers/ClienteController');
 const FornecedorController   = require('./controllers/FornecedorController');
 const ProdutoController      = require('./controllers/ProdutoController');
 const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController');
+const VendaController        = require('./controllers/VendaController');
 
 // Rotas
 
@@ -21,6 +22,7 @@ const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController')
 routes.post('/authenticate'  , Authenticate.logar);
 routes.post('/new_user'      , (req,res) => ProprietarioController.create(req,res) );
 routes.use(authMiddleware);
+routes.get('/test', (req, res) => res.status(200).send('ok'));
 
 // Cadastro de usuário
 routes.post('/usuario'       , (req,res) => UsuarioController.create(req,res) );
@@ -65,5 +67,9 @@ routes.get('/produtoFalta'        , (req,res) => ProdutoEmFalta.store(req,res)  
 routes.get('/produtoFalta/:id'    , (req,res) => ProdutoEmFalta.read(req,res)   );
 routes.put('/produtoFalta/:id'    , (req,res) => ProdutoEmFalta.update(req,res) );
 routes.delete('/produtoFalta/:id' , (req,res) => ProdutoEmFalta.delete(req,res) );
+
+// Orcamento
+routes.post('/orcamento' , (req,res) => VendaController.create(req,res) );
+routes.get('/orcamento'  , (req,res) => VendaController.store(req,res)  );
 
 module.exports = routes;
