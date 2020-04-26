@@ -6,18 +6,20 @@ const authMiddleware = require('./middlewares/auth');
 
 
 // controllers
-const Authenticate         = require('./controllers/Authenticate');
-const UsuarioController    = require('./controllers/UsuarioController');
-const VendedorController   = require('./controllers/VendedorController');
-const ClienteController    = require('./controllers/ClienteController');
-const FornecedorController = require('./controllers/FornecedorController');
-const ProdutoController    = require('./controllers/ProdutoController');
-const ProdutoEmFalta       = require('./controllers/ProdutoEmFaltaController');
+const Authenticate           = require('./controllers/Authenticate');
+const ProprietarioController = require('./controllers/ProprietarioController');
+const UsuarioController      = require('./controllers/UsuarioController');
+const VendedorController     = require('./controllers/VendedorController');
+const ClienteController      = require('./controllers/ClienteController');
+const FornecedorController   = require('./controllers/FornecedorController');
+const ProdutoController      = require('./controllers/ProdutoController');
+const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController');
 
 // Rotas
 
 // Authenticate
-routes.post('/authenticate', Authenticate.logar);
+routes.post('/authenticate'  , Authenticate.logar);
+routes.post('/new_user'      , (req,res) => ProprietarioController.create(req,res) );
 routes.use(authMiddleware);
 
 // Cadastro de usuário

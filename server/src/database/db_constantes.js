@@ -4,6 +4,7 @@ const FORNECEDORES = 'fornecedores';
 const CLIENTES = 'clientes';
 const PRODUTOS = 'produtos';
 const PRODUTOS_EM_FALTA = 'produtos_em_falta';
+const PROPRIETARIO = 'proprietarios';
 
 module.exports = {
     USUARIOS,
@@ -11,5 +12,6 @@ module.exports = {
     FORNECEDORES,
     CLIENTES,
     PRODUTOS, 
-    PRODUTOS_EM_FALTA
+    PRODUTOS_EM_FALTA,
+    PROPRIETARIO
 }

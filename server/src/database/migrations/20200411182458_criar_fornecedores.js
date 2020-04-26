@@ -16,6 +16,7 @@ exports.up = function(knex) {
         table.string('email');
 
         table.string('cpf',11);
+        table.string('cnpj',15);
 
         table.string('insricaoEstadual');
     });

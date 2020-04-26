@@ -1,27 +1,32 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap/';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+import ModalBody from 'react-bootstrap/ModalBody';
+import ModalFooter from 'react-bootstrap/ModalFooter';
+import ModalHeader from 'react-bootstrap/ModalHeader';
+import ModalTitle from 'react-bootstrap/ModalTitle';
 
 export default function JanelaModal(props) {
 
     return (
       <Modal
         {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size="xl"
+        aria-labelledby="modal-cadastro"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+        <ModalHeader closeButton>
+          <ModalTitle id="modal-cadastro">
             Cadastro de {props.titulo}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+          </ModalTitle>
+        </ModalHeader>
+        <ModalBody>
           {props.content}
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           <Button onClick={props.onHide}>Fechar</Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     );
+
 }

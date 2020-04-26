@@ -108,7 +108,7 @@ export default () => {
                                 <h4 className="textoSemSelecao">Cadastro de Produtos em Falta</h4>
                             </div>
                             <div className="col px-md-3 p-3 myBotao corModulo">
-                                <h4 className="textoSemSelecao">Terminal de Orçamentos</h4>
+                                <h4 className="textoSemSelecao" onClick={() => history.push('/orcamento')}>Terminal de Orçamentos</h4>
                             </div>
                             <div className="col px-md-3 p-3 myBotao corModulo">
                                 <h4 className="textoSemSelecao">Terminal de Vendas</h4>

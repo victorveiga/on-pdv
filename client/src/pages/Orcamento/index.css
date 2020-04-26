@@ -1,0 +1,39 @@
+#orcamento_principal {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#orcamento_principal #orcamento_principal_container {
+    display: block;
+    width: 100%;
+}
+
+#orcamento_principal #orcamento_cabecalho {
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+#orcamento_principal #orcamento_conteudo {
+    width: 100%;
+    background: #D8D8D8;
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#orcamento_principal #orcamento_conteudo #botoes,
+#orcamento_principal #orcamento_conteudo #botoes_operacao {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+

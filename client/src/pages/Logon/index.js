@@ -25,7 +25,7 @@ export default ()=>{
             localStorage.setItem('auth-token', response.data.token);
             localStorage.setItem('on-pdv-user-nome-usuario', response.data.nomeUsuario);
 
-            history.push('/home');
+            history.push('/');
         } catch (err) {
             localStorage.clear();
             alert('Falha no login, tente novamente.');

@@ -1,13 +1,13 @@
-const awt               = require('jsonwebtoken');
-const AuthConfig        = require('../authConfig.json');
-const UsuarioController = require('./UsuarioController');
+const awt                    = require('jsonwebtoken');
+const AuthConfig             = require('../authConfig.json');
+const ProprietarioController = require('./ProprietarioController');
 
 
 class Authenticate {
 
     async logar(req, res){
         const {username, password} = req.body;
-        const user = await UsuarioController.findByUsername(username);
+        const user = await ProprietarioController.findByUsername(username);
     
         if (!user) return res.status(400).send({error: 'User not found'});
         if (user.senha != password) return res.status(400).send({error: 'Invalid password'});
