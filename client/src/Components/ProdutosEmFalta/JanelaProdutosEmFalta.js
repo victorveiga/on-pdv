@@ -3,6 +3,7 @@ import JanelaModal from '../JanelaModal';
 import Selecao from '../Selecao';
 import api from '../../services/api';
 import FormularioProdutoEmFalta from './FormularioProdutoEmFalta';
+import Lib from '../../Lib';
 
 class JanelaProduto extends Component {
 
@@ -31,6 +32,10 @@ class JanelaProduto extends Component {
 
             this.setState({maxPage: Math.ceil(response.headers['total'] / 5)  })
             this.setState({activePage: page })
+
+            response.data.map(item => (
+                item.dataFalta = Lib.getDataString(item.dataFalta)
+            ))
 
             this.setState({produtos: response.data});
             this.setState({content: this.handleSelecao()})

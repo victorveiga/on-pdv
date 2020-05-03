@@ -42,10 +42,6 @@ class ComissaoVendedor extends Component {
         }
     }
 
-    componentDidMount(){
-        this.setState({showFormData: true})
-    }
-
     render(){
         return (<>
             <ModalLancarData 

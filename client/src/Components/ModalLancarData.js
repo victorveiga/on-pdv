@@ -24,7 +24,7 @@ class ModalLancarValor extends Component {
                     centered
                 >
                     <Modal.Header>
-                        <Modal.Title id="modal-editar-valor">Informe o Periodor</Modal.Title>
+                        <Modal.Title id="modal-editar-valor">Informe um Período</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div>
