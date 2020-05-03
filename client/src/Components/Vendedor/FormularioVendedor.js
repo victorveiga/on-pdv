@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import Lib from '../../Lib';
 
 class FormularioVendedor extends Component {
 
@@ -25,7 +26,7 @@ class FormularioVendedor extends Component {
                 email: props.dados.email,
                 cpf: props.dados.cpf,
                 comissao: props.dados.comissao,
-                dataAdmissao: props.dados.dataAdmissao
+                dataAdmissao: Lib.getDataStringYMD(props.dados.dataAdmissao)
             }
         }
         
