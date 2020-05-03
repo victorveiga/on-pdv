@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import {Table, Button} from 'react-bootstrap';
 import {FaPlusCircle, FaUserPlus, FaAddressCard} from 'react-icons/fa';
@@ -29,6 +29,8 @@ export default () =>{
     const [cliente, setCliente]               = useState();
 
     const [venda]                             = useState(new VendaController(alterarQuantidade, alterarDesconto));
+
+    const history                             = useHistory()
 
     function renderTabela(){
         setTabela(venda.getLinhas());
@@ -88,14 +90,17 @@ export default () =>{
 
     async function handleSalvar(e) {
 
+        if (venda.xItems.length <= 0) return;
+
         const data = new Date();
         venda.setDataOperacao(`${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`);
 
         try{
-            await api.post('orcamento', venda , { headers: {
+            const response = await api.post('orcamento', venda , { headers: {
                 authorization: 'Bearer '+localStorage.getItem('auth-token')
             }})
-            window.location.reload();
+
+            history.push(`relatorio-venda/${response.data.idVenda}`)
         }catch(err){
             localStorage.clear();
             alert(err);

@@ -4,6 +4,8 @@ import Logon from './pages/Logon';
 import Register from './pages/Register';
 import Orcamento from './pages/Orcamento';
 import Home from './pages/Home';
+import RelatorioVenda from './pages/RelatorioVenda';
+import ComissaoVendedor from './pages/Relatorios/ComissaoVendedor';
 import {isAuthenticated} from './Auth';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -24,7 +26,9 @@ export default function Routes() {
                 <Route path="/login" component={Logon} />  
                 <Route path="/register" component={Register} />
                 <PrivateRoute path="/" exact component={Home} />
-                <PrivateRoute path='/orcamento' component={Orcamento} />
+                <PrivateRoute path='/venda' component={Orcamento} />
+                <PrivateRoute path='/relatorio-venda/:venda' component={RelatorioVenda}/>
+                <PrivateRoute path='/comissao_vendedor' component={ComissaoVendedor}/>
             </Switch>
         </BrowserRouter>
     );

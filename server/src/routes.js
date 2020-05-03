@@ -15,6 +15,8 @@ const FornecedorController   = require('./controllers/FornecedorController');
 const ProdutoController      = require('./controllers/ProdutoController');
 const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController');
 const VendaController        = require('./controllers/VendaController');
+const EmpresaController      = require('./controllers/EmpresaController');
+const ResultadoController    = require('./controllers/ResultadoController');
 
 // Rotas
 
@@ -68,8 +70,22 @@ routes.get('/produtoFalta/:id'    , (req,res) => ProdutoEmFalta.read(req,res)   
 routes.put('/produtoFalta/:id'    , (req,res) => ProdutoEmFalta.update(req,res) );
 routes.delete('/produtoFalta/:id' , (req,res) => ProdutoEmFalta.delete(req,res) );
 
+// Cadastro da empresa
+routes.post('/empresa'       , (req,res) => EmpresaController.create(req,res) );
+routes.get('/empresa'        , (req,res) => EmpresaController.store(req,res)  );
+routes.get('/empresa/:id'    , (req,res) => EmpresaController.read(req,res)   );
+routes.put('/empresa/:id'    , (req,res) => EmpresaController.update(req,res) );
+routes.delete('/empresa/:id' , (req,res) => EmpresaController.delete(req,res) );
+
 // Orcamento
 routes.post('/orcamento' , (req,res) => VendaController.create(req,res) );
 routes.get('/orcamento'  , (req,res) => VendaController.store(req,res)  );
+
+routes.post('/venda'    , (req,res) => VendaController.create(req,res) );
+routes.get('/venda'     , (req,res) => VendaController.store(req,res)  );
+routes.get('/venda/:id' , (req,res) => VendaController.read(req,res)  );
+
+// Resutados
+routes.get('/res_comissao_vendedor', (req,res) => ResultadoController.ComissaoPorVendedor(req,res));
 
 module.exports = routes;

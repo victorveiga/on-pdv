@@ -45,9 +45,9 @@ class FormularioProduto extends Component {
     async handleSave(e){
         e.preventDefault();
 
-        if (this.state.nome == ''){ this.setState({showProdutos: true}); return }
-        if (this.state.nomeVendedor == ''){ this.setState({showVendedores: true}); return }
-        if (this.state.nomeCliente == ''){ this.setState({showClientes: true}); return }
+        if (this.state.nome === ''){ this.setState({showProdutos: true}); return }
+        if (this.state.nomeVendedor === ''){ this.setState({showVendedores: true}); return }
+        if (this.state.nomeCliente === ''){ this.setState({showClientes: true}); return }
 
         const dados = {
             dataFalta     : this.state.dataFalta,
@@ -60,7 +60,7 @@ class FormularioProduto extends Component {
             nomeVendedor  : this.state.nomeVendedor
         }
 
-        if ((!dados.dataChegada) || (dados.dataChegada === null) || dados.dataChegada == ''){
+        if ((!dados.dataChegada) || (dados.dataChegada === null) || dados.dataChegada === ''){
             delete dados.dataChegada;
         }
 

@@ -87,6 +87,10 @@
     background-color: #ba3234;
 }   
 
+.corRelatorio {
+    background-color: #155e48
+}
+
 #home_principal .botoes #home_botoes_rodape {
     justify-content: flex-end;
 }

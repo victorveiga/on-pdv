@@ -1,0 +1,58 @@
+#relatorio_venda-principal {
+    margin-top: 30px;
+    padding: 80px;
+}   
+
+#relatorio_venda-principal #cabecalho,
+#relatorio_venda-principal #emitente,
+#relatorio_venda-principal #destinatario,
+#relatorio_venda-principal #area_observacao {
+    border: 1px solid #2f353b;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+#relatorio_venda-principal #botoes {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#relatorio_venda-principal #emitente table,
+#relatorio_venda-principal #emitente th,
+#relatorio_venda-principal #emitente td,
+#relatorio_venda-principal #destinatario table,
+#relatorio_venda-principal #destinatario th,
+#relatorio_venda-principal #destinatario td {
+    border: 1px solid #2f353b;
+}
+
+#relatorio_venda-principal #itens table,
+#relatorio_venda-principal #itens table th,
+#relatorio_venda-principal #itens table td,
+#relatorio_venda-principal #quadro_totais table,
+#relatorio_venda-principal #quadro_totais table th,
+#relatorio_venda-principal #quadro_totais table td {
+    border: 1px solid #2f353b;
+}
+
+#relatorio_venda-principal #quadro_totais {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: end;
+}
+
+#relatorio_venda-principal #emitente td,
+#relatorio_venda-principal #destinatario td {
+    text-align: left;
+    width: 300px;
+}
+
+#relatorio_venda-principal .dado {
+    font-weight: normal;
+}

@@ -3,11 +3,14 @@ import ItemVenda from './ItemVenda';
 class Venda {
 
     constructor(){
-        this.dataOperacao = 0;
-        this.numero       = 0;
-        this.serie        = 0;
-        this.xItems       = [];
-        this.vendedor     = {
+        this.dataOperacao  = 0;
+        this.numero        = 0;
+        this.serie         = 0;
+        this.totalBruto    = 0;
+        this.totalDesconto = 0;
+        this.totalLiquido  = 0;
+        this.xItems        = [];
+        this.vendedor      = {
             id: 0,
             nome: ''
         }
@@ -53,6 +56,7 @@ class Venda {
             total += item.getTotalItem()
         ))
 
+        this.totalBruto = total;
         return total;
     }
 
@@ -62,11 +66,13 @@ class Venda {
             total += item.getDesconto() > 0 ? (item.getSubTotalItem() * (item.getDesconto() / 100)) : 0
         ))
 
+        this.totalDesconto = total;
         return total;
     }
 
     CalcularTotalLiquido(){
-        return this.CalcularTotalBruto() - this.CalcularDesconto();
+        this.totalLiquido = this.CalcularTotalBruto() - this.CalcularDesconto();
+        return this.totalLiquido;
     }
 
     getItemByIdentificador(identificador) {

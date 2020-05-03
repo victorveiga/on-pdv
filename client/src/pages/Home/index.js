@@ -14,6 +14,7 @@ import Cliente from '../../Components/Cliente/JanelaCliente';
 import Fornecedor  from '../../Components/Fornecedor/JanelaFornecedor';
 import Vendedor from '../../Components/Vendedor/JanelaVendedor';
 import ProdutoEmFalta from '../../Components/ProdutosEmFalta/JanelaProdutosEmFalta';
+import JanelaEmpresa from '../../Components/Empresa/JanelaEmpresa'; 
 
 export default () => {
     const [nome, setNome] = useState();
@@ -26,6 +27,7 @@ export default () => {
     const [fornecedorModalShow, setFornecedorModalShow] = useState(false);
     const [vendedorModalShow, setVendedorModalShow]     = useState(false);
     const [produtosEmFaltaShow, setProdutosEmFaltaShow] = useState(false);
+    const [empresaShow, setEmpresaShow]                 = useState(false);
     
     useEffect(()=>{
         const nome_usuario = localStorage.getItem('on-pdv-user-nome')
@@ -75,6 +77,12 @@ export default () => {
                 onHide={() => setProdutosEmFaltaShow(false)}
             />
 
+            {/** Janela de cadastro da empresa default */}
+            <JanelaEmpresa
+                show={empresaShow}
+                onHide={() => setEmpresaShow(false)}
+            />
+
             <div className="container" id="home_principal">
                 <div row="row">
                     <div className="botoes">
@@ -114,8 +122,8 @@ export default () => {
                             <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => setProdutosEmFaltaShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Produtos em Falta</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo">
-                                <h4 className="textoSemSelecao" onClick={() => history.push('/orcamento')}>Terminal de Orçamentos</h4>
+                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => history.push('/venda')}>
+                                <h4 className="textoSemSelecao">Terminal de Orçamentos</h4>
                             </div>
                             <div className="col px-md-3 p-3 myBotao corModulo">
                                 <h4 className="textoSemSelecao">Terminal de Vendas</h4>
@@ -123,11 +131,17 @@ export default () => {
                         </div>
 
                         <div className="row">
-                            <div className="col px-md-3 p-3 myBotao corCadastro">
-                                <h4 className="textoSemSelecao">Cadastro de Empresas</h4>
+                            <div className="col px-md-3 p-3 myBotao corCadastro" onClick={() => setEmpresaShow(true)}>
+                                <h4 className="textoSemSelecao">Cadastro de Empresa</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo">
-                                <h4 className="textoSemSelecao">Relatórios</h4>
+                            <div className="col px-md-3 p-3 myBotao corRelatorio" onClick={() => history.push('/comissao_vendedor')}>
+                                <h4 className="textoSemSelecao">Relatório de Comissões de Vendedores</h4>
+                            </div>
+                            <div className="col px-md-3 p-3 myBotao corRelatorio">
+                                <h4 className="textoSemSelecao">Relatório de Vendas</h4>
+                            </div>
+                            <div className="col px-md-3 p-3 myBotao corRelatorio" style={{visibility: 'hidden'}}>
+                                <h4 className="textoSemSelecao"></h4>
                             </div>
                         </div>
 

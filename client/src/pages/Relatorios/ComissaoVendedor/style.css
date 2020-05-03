@@ -1,0 +1,23 @@
+#relatorio_comissao_vendedor {
+    margin-top: 30px;
+}
+
+#relatorio_comissao_vendedor table, 
+#relatorio_comissao_vendedor table tr,
+#relatorio_comissao_vendedor table th,
+#relatorio_comissao_vendedor table td {
+    border: 1px solid #ccc;
+}
+
+#relatorio_comissao_vendedor table tr td,
+#relatorio_comissao_vendedor table tr th {
+    text-align: center;
+}
+
+#relatorio_comissao_vendedor #botoes {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
