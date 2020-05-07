@@ -1,6 +1,6 @@
 export default class ItemVenda {
 
-    constructor(id=0, codigoBarras='', nome='', quantidade=0, preco=0, desconto=0, descontoMaximo=0){
+    constructor(id=0, codigoBarras='', nome='', quantidade=1, preco=0, desconto=0, descontoMaximo=0){
 
         this.identificador  = Math.ceil(Math.random() * 1000000);
         this.id             = id;

@@ -11,7 +11,9 @@ export default function JanelaModal(props) {
     return (
       <Modal
         size="xl"
-        {...props}
+        show={props.show}
+        onHide={props.onHide}
+        onShow={props.onShow}
         aria-labelledby="modal-cadastro"
         centered
       >

@@ -9,6 +9,9 @@ class JanelaUsuario extends Component {
     constructor(props){
         super(props);
 
+        // Formulário para resgatar um registro
+        this.selecionarRegistro = props.selecionarRegistro;
+
         this.state = {
             content: null,
             usuarios: null,
@@ -39,13 +42,16 @@ class JanelaUsuario extends Component {
     }
 
     handleSelecao(){
+        // Formulário para editar o registro
+        const formularioEditar = (data) => {this.handleFormulario(this,data)}
+
         return (
             <Selecao
                 NomesCamposSelecao={['#', 'Nome', 'Nome de Usuário', 'E-mail']}
                 CamposSelecao={['id', 'nome', 'nomeUsuario', 'email']}
                 DataSelecao={this.state.usuarios}
                 formularioNovo={() => {this.handleFormulario(this)}}
-                formularioEditar={(data) => {this.handleFormulario(this,data)}}
+                formularioEditar={this.selecionarRegistro?this.selecionarRegistro:formularioEditar}
                 maxPage={this.state.maxPage}
                 activePage={this.state.activePage}
                 carregar={(page, search) => {this.getUsuarios(page,search)}}

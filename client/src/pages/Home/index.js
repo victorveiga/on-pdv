@@ -122,10 +122,10 @@ export default () => {
                             <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => setProdutosEmFaltaShow(true)}>
                                 <h4 className="textoSemSelecao">Cadastro de Produtos em Falta</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => history.push('/venda')}>
+                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => history.push('/orcamento')}>
                                 <h4 className="textoSemSelecao">Terminal de Orçamentos</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo">
+                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => history.push('/venda')}>
                                 <h4 className="textoSemSelecao">Terminal de Vendas</h4>
                             </div>
                         </div>

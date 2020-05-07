@@ -1,0 +1,53 @@
+/*
+#venda_principal {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #D8D8D8;
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+}
+*/
+
+#venda_principal #cabecalho {
+    text-align: center;
+    margin: 30px 30px;
+}
+
+#venda_principal #produtos table {
+    width: 100%;
+}
+
+#venda_principal #produtos table tr th {
+    font-weight: bold;
+}
+
+#venda_principal #produtos table,
+#venda_principal #produtos table tr,
+#venda_principal #produtos table tr th
+#venda_principal #produtos table tr td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#venda_principal #botoes {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#venda_principal #botoes Button {
+    margin-right: 5px;
+}
+
+#venda_principal #quadro_totais {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

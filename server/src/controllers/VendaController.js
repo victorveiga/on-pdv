@@ -9,7 +9,7 @@ class OrcamentoController extends Controller {
     }
 
     store(req, res){
-        return super.store(req,res, ['numero', 'idCliente', 'idVendedor']);
+        return super.store(req,res, ['numero', 'numero', 'numero']);
     }
 
     async _createItens(data){

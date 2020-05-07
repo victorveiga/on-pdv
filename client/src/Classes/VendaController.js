@@ -33,6 +33,22 @@ class VendaController extends Venda {
 
         </>);
     }
+
+    getLinhasResumo(){
+        return (<>
+
+            {this.xItems.map(item => (
+                <tr key={item.getIdentificador()}>
+                    <td>{item.getCodigoBarras()}</td>
+                    <td>{item.getNome().substring(0,28)}</td>
+                    <td>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(item.getPreco())}</td>
+                    <td>{item.getQuantidade()}</td>
+                    <td>{item.getDesconto()}</td>
+                </tr>
+            ))}
+
+        </>);
+    }
 }
 
 export default VendaController;

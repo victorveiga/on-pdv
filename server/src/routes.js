@@ -78,8 +78,9 @@ routes.put('/empresa/:id'    , (req,res) => EmpresaController.update(req,res) );
 routes.delete('/empresa/:id' , (req,res) => EmpresaController.delete(req,res) );
 
 // Orcamento
-routes.post('/orcamento' , (req,res) => VendaController.create(req,res) );
-routes.get('/orcamento'  , (req,res) => VendaController.store(req,res)  );
+routes.post('/orcamento'    , (req,res) => VendaController.create(req,res) );
+routes.get('/orcamento'     , (req,res) => VendaController.store(req,res)  );
+routes.get('/orcamento/:id' , (req,res) => VendaController.read(req,res)  );
 
 routes.post('/venda'    , (req,res) => VendaController.create(req,res) );
 routes.get('/venda'     , (req,res) => VendaController.store(req,res)  );

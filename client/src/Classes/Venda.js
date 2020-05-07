@@ -29,7 +29,7 @@ class Venda {
     getSerie(){ return this.serie }
 
     AddItem(data){
-        this.xItems.push(new ItemVenda(data.id, data.codigoBarras, data.nome, 1, data.preco, 0, data.descontoMaximo));
+        this.xItems.push(new ItemVenda(data.id, data.codigoBarras, data.nome, data.quantidade, data.preco, data.desconto, data.descontoMaximo));
     }
 
     AddVendedor(data){

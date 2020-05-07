@@ -96,7 +96,7 @@ class FormularioVendedor extends Component {
                           value={this.state.sexo} 
                           onChange={e => this.setState({sexo: e.target.value})}
                           required>
-                            <option value="" selected>Escolher...</option>
+                            <option value=" " selected>Escolher...</option>
                             <option value="F">0 - Feminino</option>
                             <option value="M">1 - Masculino</option>
                             <option value="N">Não binário</option>
