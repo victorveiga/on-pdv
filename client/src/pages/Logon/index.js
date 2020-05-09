@@ -83,6 +83,14 @@ export default ()=>{
                             </div>
                             <div className="form-group">
                                 <p className="text-center">Não tem conta? <Link to="/register" id="signup">Inscreva-se aqui</Link></p>
+                                <div>
+                                    <p style={{textAlign: 'center', marginTop: '0', paddingTop: 0}}>
+                                        <a href="https://github.com/victorveiga">Victor Veiga</a>
+                                        <span> - </span>
+                                        <a href="https://github.com/lucasbrendow">Lucas Brendow</a>
+                                        <a style={{display: 'block'}} href="">Raiane Rosa</a>
+                                    </p>
+                                </div>
                             </div>
                             
                         </form>

@@ -4,7 +4,6 @@ const routes         = express.Router();
 //const valUser        = require('connect-ensure-login');
 const authMiddleware = require('./middlewares/auth');
 
-
 // controllers
 const Authenticate           = require('./controllers/Authenticate');
 const ProprietarioController = require('./controllers/ProprietarioController');
@@ -14,7 +13,9 @@ const ClienteController      = require('./controllers/ClienteController');
 const FornecedorController   = require('./controllers/FornecedorController');
 const ProdutoController      = require('./controllers/ProdutoController');
 const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController');
-const VendaController        = require('./controllers/VendaController');
+const Venda                  = require('./controllers/VendaController');
+const VendaController        = new Venda(true);
+const OrcamentoController    = new Venda();
 const EmpresaController      = require('./controllers/EmpresaController');
 const ResultadoController    = require('./controllers/ResultadoController');
 
@@ -78,11 +79,12 @@ routes.put('/empresa/:id'    , (req,res) => EmpresaController.update(req,res) );
 routes.delete('/empresa/:id' , (req,res) => EmpresaController.delete(req,res) );
 
 // Orcamento
-routes.post('/orcamento'    , (req,res) => VendaController.create(req,res) );
-routes.get('/orcamento'     , (req,res) => VendaController.store(req,res)  );
-routes.get('/orcamento/:id' , (req,res) => VendaController.read(req,res)  );
+routes.post('/orcamento'    , (req,res) => OrcamentoController.create(req,res) );
+routes.get('/orcamento'     , (req,res) => OrcamentoController.store(req,res)  );
+routes.get('/orcamento/:id' , (req,res) => OrcamentoController.read(req,res)  );
 
 routes.post('/venda'    , (req,res) => VendaController.create(req,res) );
+routes.put('/venda/:id' , (req,res) => VendaController.update(req,res) );
 routes.get('/venda'     , (req,res) => VendaController.store(req,res)  );
 routes.get('/venda/:id' , (req,res) => VendaController.read(req,res)  );
 

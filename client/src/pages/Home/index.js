@@ -137,11 +137,11 @@ export default () => {
                             <div className="col px-md-3 p-3 myBotao corRelatorio" onClick={() => history.push('/comissao_vendedor')}>
                                 <h4 className="textoSemSelecao">Relatório de Comissões de Vendedores</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corRelatorio">
-                                <h4 className="textoSemSelecao">Relatório de Vendas</h4>
+                            <div className="col px-md-3 p-3 myBotao corRelatorio" onClick={() => history.push('/fechamento_caixa')}>
+                                <h4 className="textoSemSelecao">Fechamento de caixa</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corRelatorio" style={{visibility: 'hidden'}}>
-                                <h4 className="textoSemSelecao"></h4>
+                            <div className="col px-md-3 p-3 myBotao corModulo">
+                                <h4 className="textoSemSelecao">Contas a Receber</h4>
                             </div>
                         </div>
 

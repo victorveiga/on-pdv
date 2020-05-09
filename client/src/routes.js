@@ -9,6 +9,7 @@ import Orcamento from './pages/Orcamento';
 import Home from './pages/Home';
 import RelatorioVenda from './pages/RelatorioVenda';
 import ComissaoVendedor from './pages/Relatorios/ComissaoVendedor';
+import FechamentoCaixa from './pages/Relatorios/Fechamento';
 import Venda from './pages/Venda';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -32,6 +33,7 @@ export default function Routes() {
                 <PrivateRoute path='/orcamento' component={Orcamento} />
                 <PrivateRoute path='/relatorio-venda/:venda' component={RelatorioVenda}/>
                 <PrivateRoute path='/comissao_vendedor' component={ComissaoVendedor}/>
+                <PrivateRoute patch='/fechamento_caixa' component={FechamentoCaixa}/>
                 <PrivateRoute path='/venda' component={Venda}/>
             </Switch>
         </BrowserRouter>

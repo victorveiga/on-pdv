@@ -8,6 +8,7 @@ const PROPRIETARIO = 'proprietarios';
 const VENDA = 'vendas';
 const VENDA_ITEM = 'vendas_itens';
 const EMPRESA = 'empresa';
+const NUMERACAO = 'numeracao';
 
 module.exports = {
     USUARIOS,
@@ -19,5 +20,6 @@ module.exports = {
     PROPRIETARIO,
     VENDA,
     VENDA_ITEM,
-    EMPRESA
+    EMPRESA,
+    NUMERACAO
 }

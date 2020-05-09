@@ -65,7 +65,7 @@ class JanelaOrcamento extends Component {
                 {...this.props}
                 onShow={() => {this.getOrcamentos()}}
                 content={this.state.content}
-                titulo={"Produtos"}
+                titulo={"Orçamentos"}
             />
         );
     }  

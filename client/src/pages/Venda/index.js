@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Button, Modal} from 'react-bootstrap';
 import logo from '../../assets/logo.png';
 import './style.css';
 import api from '../../services/api';
@@ -12,6 +11,9 @@ import JanelaOrcamento from '../../Components/Orcamento/JanelaOrcamento';
 
 import VendaClass from '../../Classes/VendaController';
 
+const OPERADOR_CAIXA = 'operador_caixa';
+const OPERADOR_CAIXA_ID = 'operador_caixa_id'
+
 class Venda extends Component {
     constructor(props){
         super(props);
@@ -20,15 +22,15 @@ class Venda extends Component {
             empresa: {
                 nome: 'Nome do mercado'
             },
-            usuario: {
-                nome: 'Sem usuário'
-            },
+            usuario: 'Sem usuário',
+            usuarioId: null,
             inputProduto: '',
             inputQtde: '',
             inputDesconto: '',
             showJanelaUsuario: false,
             showProduto: false,
-            showOrcamento: false
+            showOrcamento: false,
+            showConfirmFechamento: false
         }
 
         this.venda = new VendaClass();
@@ -51,7 +53,12 @@ class Venda extends Component {
             }
 
             this.setState({empresa: aux_data});
-            this.setState({showJanelaUsuario: true});
+
+            if (!localStorage.getItem(OPERADOR_CAIXA))
+                this.setState({showJanelaUsuario: true});
+            else
+                this.setState({usuario: localStorage.getItem(OPERADOR_CAIXA), usuarioId: localStorage.getItem(OPERADOR_CAIXA_ID)});    
+
         } catch (error) {
             alert(error)
             localStorage.clear();
@@ -64,9 +71,56 @@ class Venda extends Component {
         $('#venda_principal #produto').focus();
     }
 
-    handleKeyDown(e, self){
+    /** Eventos de botões */
+    async handleSave(){
 
-        console.log(e.keyCode)
+        if (this.venda.xItems.length <= 0) return
+
+        const data = new Date();
+        this.venda.setDataOperacao(`${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`);
+        this.venda.AddUsuario({id: this.state.usuarioId, nome: this.state.usuario});
+
+        try {
+            let response = null;
+            if (!this.venda.getId()){
+                response = await api.post('venda/', this.venda,{headers: {
+                    authorization: 'Bearer '+localStorage.getItem('auth-token')
+                }});
+            } else {
+                response = await api.put(`venda/${this.venda.getId()}`, this.venda,{headers: {
+                    authorization: 'Bearer '+localStorage.getItem('auth-token')
+                }});
+            }   
+
+            if (response.data.idVenda) this.props.history.push(`/relatorio-venda/${response.data.idVenda}`);
+            else alert('Ops! Algo de errado aconteceu e a venda não foi salva, por favor, tente novamente!');
+            
+        } catch (error) {
+            alert(error);
+            localStorage.clear();
+            window.location.reload();
+        }
+    }
+
+    handleEscape(){
+        this.setState({showConfirmFechamento: true});
+    }
+
+    handleOrcamento(){
+        this.setState({showOrcamento: true})
+        $('#venda_principal #produto').focus();
+    }
+
+    sairDaVenda(finalizarCaixa = false){
+        if (finalizarCaixa)
+            localStorage.removeItem(OPERADOR_CAIXA);
+
+        this.props.history.push('/');
+    }
+
+    /** Fim dos Eventos de botões */
+
+    handleKeyDown(e, self){
 
         if (e.keyCode === 13){
             
@@ -87,12 +141,11 @@ class Venda extends Component {
         }
 
         if (e.keyCode === 121){
-            this.setState({showOrcamento: true})
-            $('#venda_principal #produto').focus();
+            this.handleOrcamento();
         }
 
         if (e.keyCode === 27){
-            this.props.history.push('/');
+            this.handleEscape();
         }
         
     }
@@ -157,7 +210,8 @@ class Venda extends Component {
             }
 
             self.venda = new VendaClass();
-
+            
+            self.venda.setId(aux_orcamento.id);
             self.venda.setDataOperacao(aux_orcamento.dataOperacao);
             self.venda.setNumero(aux_orcamento.numero);
             self.venda.setSerie(aux_orcamento.serie);
@@ -188,6 +242,26 @@ class Venda extends Component {
     render(){
 
         return (<>
+            <Modal
+                show={this.state.showConfirmFechamento}
+                onHide={() => {this.setState({showConfirmFechamento: false})}}
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Fechamento de caixa</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p>Deseja realizar o fechamento de caixa agora?</p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="primary"   onClick={() => this.sairDaVenda(true)}>Fechar o caixa agora</Button>
+                    <Button variant="secondary" onClick={() => this.sairDaVenda()}>Deixar o caixa aberto</Button>
+                    <Button variant="secondary" onClick={() => this.setState({showConfirmFechamento: false})}>Cancelar</Button>
+                </Modal.Footer>
+            </Modal>
+
             <JanelaUsuario
                 show={this.state.showJanelaUsuario}
                 onHide={() => this.setState({showJanelaUsuario: false})}
@@ -198,7 +272,9 @@ class Venda extends Component {
                     }
 
                     this.setState({showJanelaUsuario: false});
-                    this.setState({usuario: data})
+                    this.setState({usuario: data.nome, usuarioId: data.id})
+                    localStorage.setItem(OPERADOR_CAIXA, data.nome);
+                    localStorage.setItem(OPERADOR_CAIXA_ID, data.id);
                 }}
             />
             <JanelaProduto
@@ -212,10 +288,11 @@ class Venda extends Component {
                 selecionarRegistro={(data) => this.adicionarOrcamento(data,this)}
             />
             <div id="venda_principal" className="container" onKeyDown={(e) => this.handleKeyDown(e,this)}>
+
                 <div id="cabecalho">
                     <h1>{this.state.empresa.nome}</h1>
                     <h4>Caixa 1</h4>
-                    <h5>{this.state.usuario.nome}</h5>
+                    <h5>{this.state.usuario}</h5>
                 </div>
 
                 <div className="row">
@@ -316,14 +393,9 @@ class Venda extends Component {
                 </div>
 
                 <div id="botoes">
-                    <Link to="/"><Button>Menu (ESC)</Button></Link>
-                    <Button onClick={() => console.log(this.venda)}>Finalizar (F9)</Button>
-                    <Button onClick={(e) => {
-
-                        this.setState({showOrcamento: true})
-                        $('#venda_principal #produto').focus();
-
-                    }}>Orçamentos (F10)</Button>
+                    <Button onClick={() => this.handleEscape()}>Menu (ESC)</Button>
+                    <Button onClick={() => this.handleSave()}>Finalizar (F9)</Button>
+                    <Button onClick={(e) => this.handleOrcamento()}>Orçamentos (F10)</Button>
                 </div>
             </div>
         </>);

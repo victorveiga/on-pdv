@@ -3,6 +3,7 @@ import ItemVenda from './ItemVenda';
 class Venda {
 
     constructor(){
+        this.id            = null;
         this.dataOperacao  = 0;
         this.numero        = 0;
         this.serie         = 0;
@@ -10,6 +11,7 @@ class Venda {
         this.totalDesconto = 0;
         this.totalLiquido  = 0;
         this.xItems        = [];
+
         this.vendedor      = {
             id: 0,
             nome: ''
@@ -19,11 +21,18 @@ class Venda {
             id: 0,
             nome: ''
         }
+
+        this.usuario      = {
+            id: 0,
+            nome: ''
+        }
     }
 
+    setId(id){ this.id = id}
     setDataOperacao(dataOperacao){ this.dataOperacao = dataOperacao }
     setNumero(numero){ this.numero = numero}
     setSerie(serie) { this.serie = serie }
+    getId(){ return this.id }
     getDataOperacao(){ return this.dataOperacao }
     getNumero(){ return this.numero }
     getSerie(){ return this.serie }
@@ -41,6 +50,11 @@ class Venda {
         this.cliente.id   = data.id;
         this.cliente.nome = data.nome;
     }
+
+    AddUsuario(data){
+        this.usuario.id = data.id;
+        this.usuario.nome = data.nome;
+    }
     
     getVendedor(){
         return this.vendedor;
@@ -50,11 +64,17 @@ class Venda {
         return this.cliente;
     }
 
+    getUsuario(){
+        return this.usuario;
+    }
+
     CalcularTotalBruto(){
         let total = 0;
         this.xItems.map(item => (
             total += item.getTotalItem()
         ))
+
+        total += this.CalcularDesconto();  
 
         this.totalBruto = total;
         return total;
