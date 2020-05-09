@@ -33,7 +33,7 @@ export default function Routes() {
                 <PrivateRoute path='/orcamento' component={Orcamento} />
                 <PrivateRoute path='/relatorio-venda/:venda' component={RelatorioVenda}/>
                 <PrivateRoute path='/comissao_vendedor' component={ComissaoVendedor}/>
-                <PrivateRoute patch='/fechamento_caixa' component={FechamentoCaixa}/>
+                <PrivateRoute path='/fechamento_caixa' component={FechamentoCaixa}/>
                 <PrivateRoute path='/venda' component={Venda}/>
             </Switch>
         </BrowserRouter>
