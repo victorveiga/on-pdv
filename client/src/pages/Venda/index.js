@@ -8,11 +8,9 @@ import $ from 'jquery';
 import JanelaUsuario from '../../Components/Usuario/JanelaUsuario';
 import JanelaProduto from '../../Components/Produto/JanelaProduto';
 import JanelaOrcamento from '../../Components/Orcamento/JanelaOrcamento';
+import JanelaPagamento from '../../Components/Pagamento/JanelaPagamento';
 
 import VendaClass from '../../Classes/VendaController';
-
-const OPERADOR_CAIXA = 'operador_caixa';
-const OPERADOR_CAIXA_ID = 'operador_caixa_id'
 
 class Venda extends Component {
     constructor(props){
@@ -30,7 +28,10 @@ class Venda extends Component {
             showJanelaUsuario: false,
             showProduto: false,
             showOrcamento: false,
-            showConfirmFechamento: false
+            showConfirmFechamento: false,
+            showPagamento: false,
+            totalLiquido: 0,
+            idCaixa: 0
         }
 
         this.venda = new VendaClass();
@@ -54,10 +55,14 @@ class Venda extends Component {
 
             this.setState({empresa: aux_data});
 
-            if (!localStorage.getItem(OPERADOR_CAIXA))
+            const response_caixa = await api.get(`caixa_controler`, {headers: {
+                authorization: 'Bearer '+localStorage.getItem('auth-token')
+            }});
+
+            if (!response_caixa.data.idUsuario)
                 this.setState({showJanelaUsuario: true});
             else
-                this.setState({usuario: localStorage.getItem(OPERADOR_CAIXA), usuarioId: localStorage.getItem(OPERADOR_CAIXA_ID)});    
+                this.setState({usuario: response_caixa.data.nome, usuarioId: response_caixa.data.idUsuario, idCaixa: response_caixa.data.id});    
 
         } catch (error) {
             alert(error)
@@ -75,10 +80,12 @@ class Venda extends Component {
     async handleSave(){
 
         if (this.venda.xItems.length <= 0) return
+        if (!this.state.usuarioId) return alert('Ops! O caixa não está aberto!')
 
         const data = new Date();
         this.venda.setDataOperacao(`${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`);
         this.venda.AddUsuario({id: this.state.usuarioId, nome: this.state.usuario});
+        this.venda.setCaixa(this.state.idCaixa);
 
         try {
             let response = null;
@@ -111,10 +118,26 @@ class Venda extends Component {
         $('#venda_principal #produto').focus();
     }
 
-    sairDaVenda(finalizarCaixa = false){
-        if (finalizarCaixa)
-            localStorage.removeItem(OPERADOR_CAIXA);
+    async sairDaVenda(finalizarCaixa = false){
+        if (finalizarCaixa){
+            try {
+                const response = await api.post('caixa_controler_fechamento/', {idUsuario: this.state.usuarioId},{headers: {
+                    authorization: 'Bearer '+localStorage.getItem('auth-token')
+                }});
 
+                if (response.data == 'fechado')
+                    this.props.history.push('/');
+                else {
+                    alert('Não foi possível fechar o caixa', response.data);
+                    return    
+                }    
+            } catch (error) {
+                alert(error);
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+            
         this.props.history.push('/');
     }
 
@@ -183,6 +206,7 @@ class Venda extends Component {
             window.location.reload();
         }
        
+        this.setState({totalLiquido: this.venda.CalcularTotalLiquido()});
         this.setState({inputProduto: '', inputQtde: '', inputDesconto: ''});
         $('#venda_principal #produto').focus();
     }
@@ -235,6 +259,7 @@ class Venda extends Component {
             window.location.reload();
         }
 
+        this.setState({totalLiquido: this.venda.CalcularTotalLiquido()});
         self.forceUpdate();
         $('#venda_principal #produto').focus();
     }
@@ -265,16 +290,36 @@ class Venda extends Component {
             <JanelaUsuario
                 show={this.state.showJanelaUsuario}
                 onHide={() => this.setState({showJanelaUsuario: false})}
-                selecionarRegistro={(data) => {
+                selecionarRegistro={async (data) => {
 
                     if (!data){
                         window.location.reload();
                     }
 
+                    let idUsuario   = null
+                    let nomeUsuario = null;
+                    let idCaixa     = null;
+
                     this.setState({showJanelaUsuario: false});
-                    this.setState({usuario: data.nome, usuarioId: data.id})
-                    localStorage.setItem(OPERADOR_CAIXA, data.nome);
-                    localStorage.setItem(OPERADOR_CAIXA_ID, data.id);
+                    
+                    try {
+                        const response = await api.post(`caixa_controler`, {idUsuario: data.id}, {headers: {
+                            authorization: 'Bearer '+localStorage.getItem('auth-token')
+                        }});
+
+
+                        if (response.data.idCaixa) {
+                            idUsuario        = response.data.usuario.id;
+                            nomeUsuario      = response.data.usuario.nome;
+                            idCaixa          = response.data.idCaixa;
+                        }
+
+                        this.setState({usuario: nomeUsuario, usuarioId: idUsuario, idCaixa});
+                    } catch (error) {
+                        alert(error);
+                        localStorage.clear();
+                        window.location.reload();
+                    }
                 }}
             />
             <JanelaProduto
@@ -286,6 +331,12 @@ class Venda extends Component {
                 show={this.state.showOrcamento}
                 onHide={() => this.setState({showOrcamento: false})}
                 selecionarRegistro={(data) => this.adicionarOrcamento(data,this)}
+            />
+            <JanelaPagamento
+                show={this.state.showPagamento}
+                onHide={() => this.setState({showPagamento: false})}
+                venda={this.venda}
+                handleSave={() => this.handleSave()}
             />
             <div id="venda_principal" className="container" onKeyDown={(e) => this.handleKeyDown(e,this)}>
 
@@ -394,7 +445,13 @@ class Venda extends Component {
 
                 <div id="botoes">
                     <Button onClick={() => this.handleEscape()}>Menu (ESC)</Button>
-                    <Button onClick={() => this.handleSave()}>Finalizar (F9)</Button>
+                    <Button onClick={() => {
+                        if (this.venda.xItems.length <= 0) {
+                            alert('Inicie uma venda antes de continuar')
+                            return
+                        }    
+                        this.setState({showPagamento: true})
+                    }}>Finalizar (F9)</Button>
                     <Button onClick={(e) => this.handleOrcamento()}>Orçamentos (F10)</Button>
                 </div>
             </div>

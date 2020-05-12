@@ -38,6 +38,7 @@ class ResultadoController {
             FROM DADOS D  
             LEFT JOIN VENDAS on (VENDAS."idVendedor" = D.ID_VENDEDOR)
             WHERE VENDAS."dataOperacao" >= ? AND VENDAS."dataOperacao" <= ?
+            AND COALESCE(VENDAS."numero_ofical", 0) > 0
             GROUP BY 1,2,3
         ORDER BY 2
         `, [inicio, fim]);

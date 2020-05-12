@@ -3,26 +3,29 @@ import ItemVenda from './ItemVenda';
 class Venda {
 
     constructor(){
-        this.id            = null;
-        this.dataOperacao  = 0;
-        this.numero        = 0;
-        this.serie         = 0;
-        this.totalBruto    = 0;
-        this.totalDesconto = 0;
-        this.totalLiquido  = 0;
-        this.xItems        = [];
+        this.id             = null;
+        this.dataOperacao   = 0;
+        this.numero         = 0;
+        this.serie          = 0;
+        this.totalBruto     = 0;
+        this.totalDesconto  = 0;
+        this.totalLiquido   = 0;
+        this.formaPagamento = 0;
+        this.parcelas       = 0;
+        this.idCaixa        = 0;
+        this.xItems         = [];
 
-        this.vendedor      = {
+        this.vendedor       = {
             id: 0,
             nome: ''
         }
 
-        this.cliente      = {
+        this.cliente       = {
             id: 0,
             nome: ''
         }
 
-        this.usuario      = {
+        this.usuario       = {
             id: 0,
             nome: ''
         }
@@ -32,10 +35,16 @@ class Venda {
     setDataOperacao(dataOperacao){ this.dataOperacao = dataOperacao }
     setNumero(numero){ this.numero = numero}
     setSerie(serie) { this.serie = serie }
+    setFormaPagamento(forma){ this.formaPagamento = forma}
+    setParcelas(parcelas){ this.parcelas = parcelas }
+    setCaixa(caixa){ this.idCaixa = caixa }
     getId(){ return this.id }
     getDataOperacao(){ return this.dataOperacao }
     getNumero(){ return this.numero }
     getSerie(){ return this.serie }
+    getFormaPagamento(){ return this.formaPagamento }
+    getParcelas(){ return this.parcelas }
+    getCaixa(){ return this.idCaixa }
 
     AddItem(data){
         this.xItems.push(new ItemVenda(data.id, data.codigoBarras, data.nome, data.quantidade, data.preco, data.desconto, data.descontoMaximo));

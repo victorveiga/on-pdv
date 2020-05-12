@@ -18,6 +18,7 @@ const VendaController        = new Venda(true);
 const OrcamentoController    = new Venda();
 const EmpresaController      = require('./controllers/EmpresaController');
 const ResultadoController    = require('./controllers/ResultadoController');
+const CaixaController        = require('./controllers/ControleCaixaController');
 
 // Rotas
 
@@ -87,6 +88,10 @@ routes.post('/venda'    , (req,res) => VendaController.create(req,res) );
 routes.put('/venda/:id' , (req,res) => VendaController.update(req,res) );
 routes.get('/venda'     , (req,res) => VendaController.store(req,res)  );
 routes.get('/venda/:id' , (req,res) => VendaController.read(req,res)  );
+
+routes.post('/caixa_controler'            , (req,res) => CaixaController.abertura(req,res)  );
+routes.post('/caixa_controler_fechamento' , (req,res) => CaixaController.fechamento(req,res)  );
+routes.get('/caixa_controler'             , (req,res) => CaixaController.verificar(req,res) );
 
 // Resutados
 routes.get('/res_comissao_vendedor', (req,res) => ResultadoController.ComissaoPorVendedor(req,res));

@@ -9,6 +9,8 @@ const VENDA = 'vendas';
 const VENDA_ITEM = 'vendas_itens';
 const EMPRESA = 'empresa';
 const NUMERACAO = 'numeracao';
+const CONTA_RECEBER = 'contas_receber';
+const CONTROLE_CAIXA = 'controle_caixa';
 
 module.exports = {
     USUARIOS,
@@ -21,5 +23,7 @@ module.exports = {
     VENDA,
     VENDA_ITEM,
     EMPRESA,
-    NUMERACAO
+    NUMERACAO,
+    CONTA_RECEBER,
+    CONTROLE_CAIXA
 }

@@ -1,4 +1,4 @@
-const {VENDA, VENDA_ITEM, PRODUTOS, VENDEDORES, CLIENTES, NUMERACAO} = require('../database/db_constantes');
+const {VENDA, VENDA_ITEM, PRODUTOS, VENDEDORES, CLIENTES, NUMERACAO, CONTA_RECEBER} = require('../database/db_constantes');
 const Controller = require('../controllers/Controller');
 const banco = require('../database/connection');
 
@@ -18,6 +18,31 @@ class OrcamentoController extends Controller {
     async _getNumeroOficial(){
         const [id] = await banco(NUMERACAO).insert( {emitido: 'S'} ).returning('id');
         return id
+    }
+
+    async _lancarContaAPagar(dados, idVenda, nomeCliente){
+        const numero_parcelas = dados.parcelas;
+           
+        const data = new Date(dados.dataOperacao);
+            
+        for (let i = 1; i <= numero_parcelas; i++){
+            let objeto = {
+                lancamento: dados.dataOperacao,
+                idVenda,
+                descricao: `DUPLICATA ${i}/${numero_parcelas} - 
+                            R$: ${dados.totalLiquido} - 
+                            CLIENTE: ${nomeCliente} - 
+                            VENCIMENTO: ${data.getUTCDate()}/${data.getUTCMonth() + i}/${data.getUTCFullYear()}`,
+                vencimento: `${data.getUTCFullYear()}-${data.getUTCMonth() +1 + i}-${data.getUTCDate()}`,
+                parcela: i,
+                total_numero_parcela: numero_parcelas,
+                valor: (dados.totalLiquido / numero_parcelas),
+                situacao: 'A', // A - de aberto
+                idCliente: dados.idCliente
+            }
+
+            await banco(CONTA_RECEBER).insert(objeto);
+        }
     }
 
     /** Fim Funções privadas */
@@ -47,7 +72,7 @@ class OrcamentoController extends Controller {
     
     async create(req, res){
 
-        const {xItems, vendedor, cliente, usuario, totalBruto, totalDesconto, totalLiquido} = req.body;
+        const {xItems, vendedor, cliente, usuario, totalBruto, totalDesconto, totalLiquido, formaPagamento, parcelas, idCaixa} = req.body;
         let {dataOperacao, numero, serie, numero_ofical} = req.body
         const idVendedor   = vendedor.id;
         const idCliente    = cliente.id;
@@ -56,6 +81,9 @@ class OrcamentoController extends Controller {
         if (dataOperacao <= 0){
             dataOperacao = null;
         }
+
+        if (parcelas)
+            if (parcelas > 12) return res.status(401).json('unauthorized'); 
 
         if (this.vendaOficial)
             numero_ofical = await this._getNumeroOficial();
@@ -84,7 +112,10 @@ class OrcamentoController extends Controller {
             totalDesconto, 
             totalLiquido,
             numero_ofical,
-            idUsuario
+            idUsuario,
+            formaPagamento,
+            parcelas,
+            idCaixa
         }).returning('id');
 
         if (idVenda){
@@ -92,6 +123,8 @@ class OrcamentoController extends Controller {
             xItems.map(item => (
                 this._createItens({  idProduto: item.id, preco: item.preco, desconto: item.desconto, quantidade: item.quantidade, idVenda  })
             ))
+
+            if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
 
             return res.status(200).json({idVenda});
         }
@@ -123,7 +156,7 @@ class OrcamentoController extends Controller {
 
         const idVenda = req.params.id;
 
-        const {xItems, vendedor, cliente, usuario, totalBruto, totalDesconto, totalLiquido} = req.body;
+        const {xItems, vendedor, cliente, usuario, totalBruto, totalDesconto, totalLiquido, formaPagamento, parcelas, idCaixa} = req.body;
         let {dataOperacao, numero, serie, numero_ofical} = req.body
         const idVendedor   = vendedor.id;
         const idCliente    = cliente.id;
@@ -150,7 +183,10 @@ class OrcamentoController extends Controller {
             totalDesconto, 
             totalLiquido,
             numero_ofical,
-            idUsuario
+            idUsuario,
+            formaPagamento,
+            parcelas,
+            idCaixa
         }
 
         await banco(VENDA).update(dados).where('id', idVenda);
@@ -159,6 +195,8 @@ class OrcamentoController extends Controller {
         xItems.map(item => (
             this._createItens({  idProduto: item.id, preco: item.preco, desconto: item.desconto, quantidade: item.quantidade, idVenda  })
         ))
+
+        if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
 
         return res.status(200).json({idVenda});
     }
