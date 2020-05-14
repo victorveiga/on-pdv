@@ -1,0 +1,53 @@
+#contas_receber_principal {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contas_receber_principal #contas_receber_principal_container {
+    display: block;
+    width: 100%;
+}
+
+#contas_receber_principal #contas_receber_cabecalho {
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+#contas_receber_principal #contas_receber_conteudo {
+    width: 100%;
+    background: #D8D8D8;
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#contas_receber_principal #contas_receber_conteudo #botoes,
+#contas_receber_principal #contas_receber_conteudo #botoes_operacao {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#contas_receber_principal #contas_receber_conteudo #page1 Table tbody tr {
+    cursor: pointer;
+    transition: 0.5s background;
+}
+
+#contas_receber_principal #contas_receber_conteudo #page1 Table tbody tr:hover {
+    background: lightslategrey;
+    color: white;
+}
+
+#contas_receber_principal #contas_receber_conteudo #page1 Table tbody tr:active {
+    opacity: 0.8;
+}
+

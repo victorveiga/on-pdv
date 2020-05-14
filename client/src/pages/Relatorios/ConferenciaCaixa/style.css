@@ -1,0 +1,10 @@
+#relatorio_fechamento_caixa #caixas table, 
+#relatorio_fechamento_caixa #caixas table tr,
+#relatorio_fechamento_caixa #caixas table th,
+#relatorio_fechamento_caixa #caixas table td {
+    border: 1px solid #ccc;
+}
+
+#relatorio_fechamento_caixa #caixas #tabela_detalhes {
+    text-align: center;
+}

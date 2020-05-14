@@ -5,20 +5,21 @@ const routes         = express.Router();
 const authMiddleware = require('./middlewares/auth');
 
 // controllers
-const Authenticate           = require('./controllers/Authenticate');
-const ProprietarioController = require('./controllers/ProprietarioController');
-const UsuarioController      = require('./controllers/UsuarioController');
-const VendedorController     = require('./controllers/VendedorController');
-const ClienteController      = require('./controllers/ClienteController');
-const FornecedorController   = require('./controllers/FornecedorController');
-const ProdutoController      = require('./controllers/ProdutoController');
-const ProdutoEmFalta         = require('./controllers/ProdutoEmFaltaController');
-const Venda                  = require('./controllers/VendaController');
-const VendaController        = new Venda(true);
-const OrcamentoController    = new Venda();
-const EmpresaController      = require('./controllers/EmpresaController');
-const ResultadoController    = require('./controllers/ResultadoController');
-const CaixaController        = require('./controllers/ControleCaixaController');
+const Authenticate             = require('./controllers/Authenticate');
+const ProprietarioController   = require('./controllers/ProprietarioController');
+const UsuarioController        = require('./controllers/UsuarioController');
+const VendedorController       = require('./controllers/VendedorController');
+const ClienteController        = require('./controllers/ClienteController');
+const FornecedorController     = require('./controllers/FornecedorController');
+const ProdutoController        = require('./controllers/ProdutoController');
+const ProdutoEmFalta           = require('./controllers/ProdutoEmFaltaController');
+const Venda                    = require('./controllers/VendaController');
+const VendaController          = new Venda(true);
+const OrcamentoController      = new Venda();
+const EmpresaController        = require('./controllers/EmpresaController');
+const ResultadoController      = require('./controllers/ResultadoController');
+const CaixaController          = require('./controllers/ControleCaixaController');
+const ContasReceberController  = require('./controllers/ContasReceberController');
 
 // Rotas
 
@@ -94,6 +95,12 @@ routes.post('/caixa_controler_fechamento' , (req,res) => CaixaController.fechame
 routes.get('/caixa_controler'             , (req,res) => CaixaController.verificar(req,res) );
 
 // Resutados
-routes.get('/res_comissao_vendedor', (req,res) => ResultadoController.ComissaoPorVendedor(req,res));
+routes.get('/res_comissao_vendedor' , (req,res) => ResultadoController.ComissaoPorVendedor(req,res));
+routes.get('/res_conferencia_caixa' , (req,res) => ResultadoController.ConferenciaDeCaixa(req,res)  );
+
+// Contas a Receber
+routes.get('/res_contas_receber'    , (req,res) => ContasReceberController.store(req,res)        );
+routes.put('/res_contas_receber' , (req,res) => ContasReceberController.atualizarTitulo(req,res) );
+
 
 module.exports = routes;

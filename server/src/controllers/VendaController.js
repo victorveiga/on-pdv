@@ -7,6 +7,8 @@ class OrcamentoController extends Controller {
     constructor(vendaOficial = false){
         super(VENDA);
         this.vendaOficial = vendaOficial;
+
+        this.contasReceberController = require('../controllers/ContasReceberController');
     }
 
     /** Funções privadas */
@@ -18,31 +20,6 @@ class OrcamentoController extends Controller {
     async _getNumeroOficial(){
         const [id] = await banco(NUMERACAO).insert( {emitido: 'S'} ).returning('id');
         return id
-    }
-
-    async _lancarContaAPagar(dados, idVenda, nomeCliente){
-        const numero_parcelas = dados.parcelas;
-           
-        const data = new Date(dados.dataOperacao);
-            
-        for (let i = 1; i <= numero_parcelas; i++){
-            let objeto = {
-                lancamento: dados.dataOperacao,
-                idVenda,
-                descricao: `DUPLICATA ${i}/${numero_parcelas} - 
-                            R$: ${dados.totalLiquido} - 
-                            CLIENTE: ${nomeCliente} - 
-                            VENCIMENTO: ${data.getUTCDate()}/${data.getUTCMonth() + i}/${data.getUTCFullYear()}`,
-                vencimento: `${data.getUTCFullYear()}-${data.getUTCMonth() +1 + i}-${data.getUTCDate()}`,
-                parcela: i,
-                total_numero_parcela: numero_parcelas,
-                valor: (dados.totalLiquido / numero_parcelas),
-                situacao: 'A', // A - de aberto
-                idCliente: dados.idCliente
-            }
-
-            await banco(CONTA_RECEBER).insert(objeto);
-        }
     }
 
     /** Fim Funções privadas */
@@ -102,7 +79,7 @@ class OrcamentoController extends Controller {
             serie   = 1;
         }
 
-        const [idVenda] = await banco(VENDA).insert({
+        const dados = {
             dataOperacao, 
             numero, 
             serie, 
@@ -116,7 +93,9 @@ class OrcamentoController extends Controller {
             formaPagamento,
             parcelas,
             idCaixa
-        }).returning('id');
+        }
+
+        const [idVenda] = await banco(VENDA).insert(dados).returning('id');
 
         if (idVenda){
 
@@ -124,7 +103,8 @@ class OrcamentoController extends Controller {
                 this._createItens({  idProduto: item.id, preco: item.preco, desconto: item.desconto, quantidade: item.quantidade, idVenda  })
             ))
 
-            if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
+            //if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
+            if ((formaPagamento == 2) && this.vendaOficial) await this.contasReceberController.lancarTitulos(dados, idVenda, cliente.nome)
 
             return res.status(200).json({idVenda});
         }
@@ -196,7 +176,8 @@ class OrcamentoController extends Controller {
             this._createItens({  idProduto: item.id, preco: item.preco, desconto: item.desconto, quantidade: item.quantidade, idVenda  })
         ))
 
-        if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
+        //if ((formaPagamento == 2) && this.vendaOficial) await this._lancarContaAPagar(dados, idVenda, cliente.nome);
+        if ((formaPagamento == 2) && this.vendaOficial) await this.contasReceberController.lancarTitulos(dados, idVenda, cliente.nome)
 
         return res.status(200).json({idVenda});
     }

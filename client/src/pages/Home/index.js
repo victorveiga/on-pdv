@@ -138,9 +138,9 @@ export default () => {
                                 <h4 className="textoSemSelecao">Relatório de Comissões de Vendedores</h4>
                             </div>
                             <div className="col px-md-3 p-3 myBotao corRelatorio" onClick={() => history.push('/fechamento_caixa')}>
-                                <h4 className="textoSemSelecao">Fechamento de caixa</h4>
+                                <h4 className="textoSemSelecao">Conferência do caixa</h4>
                             </div>
-                            <div className="col px-md-3 p-3 myBotao corModulo">
+                            <div className="col px-md-3 p-3 myBotao corModulo" onClick={() => history.push('/contas_receber')}>
                                 <h4 className="textoSemSelecao">Contas a Receber</h4>
                             </div>
                         </div>

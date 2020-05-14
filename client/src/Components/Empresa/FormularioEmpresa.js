@@ -34,17 +34,15 @@ class FormularioEmpresa extends Component {
                 email: this.state.email
             }
     
-            let response = null;
-    
             if (dados.id > 0){  
-                response = await api.put(`empresa/${dados.id}`, dados , {
+                await api.put(`empresa/${dados.id}`, dados , {
                     headers: {
                         authorization: 'Bearer '+localStorage.getItem('auth-token')
                     }
                 });  
             } else {
                 delete dados.id;
-                response = await api.post(`empresa`, dados, {
+                await api.post(`empresa`, dados, {
                     headers: {
                         authorization: 'Bearer '+localStorage.getItem('auth-token')
                     }
