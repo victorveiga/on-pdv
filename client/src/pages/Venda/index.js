@@ -346,101 +346,102 @@ class Venda extends Component {
                     <h5>{this.state.usuario}</h5>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-6">
-                        <img width="80%" src={logo} alt="on-pdv software"/>
+                <div id="conteudo">
+                    <div className="row">
+                        <div className="col-md-6" id="clogo">
+                            <img width="50%" src={logo} alt="on-pdv software"/>
+                        </div>
+                        <div id="produtos" className="col-md-6">
+                            <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Descrição</th>
+                                            <th>R$</th>
+                                            <th>Qtde</th>
+                                            <th>-(%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.venda.getLinhasResumo()}
+                                    </tbody>
+                                </table>
+                        </div>
                     </div>
-                    <div id="produtos" className="col-md-6">
-                        <table>
-                                <thead>
-                                    <tr>
-                                        <th>Produto</th>
-                                        <th>Descrição</th>
-                                        <th>R$</th>
-                                        <th>Qtde</th>
-                                        <th>-(%)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.venda.getLinhasResumo()}
-                                </tbody>
-                            </table>
-                    </div>
-                </div>
 
-                <div className="row">
-                    <div id="logo" className="col-md-6">
-                        <div>
+                    <div className="row">
+                        <div id="logo" className="col-md-6">
                             <div>
-                                <div>Produto</div>
-                                <input 
-                                    id="produto" 
-                                    className="form-control" 
-                                    type="text" 
-                                    placeholder="Tecle enter aqui para selecionar um produto"
-                                    value={this.state.inputProduto}
-                                    onChange={(e) => this.setState({inputProduto: e.target.value})}
-                                    onBlur={()=>this.adicionarProduto()}
-                                />
-                            </div>
-                            <div className="row" style={{marginTop: '15px'}}>
-                                <div className="col-md-6">
-                                    <div>Quantidade</div>
+                                <div>
+                                    <div>Produto</div>
                                     <input 
-                                        id="quantidade"
-                                        type="number" 
-                                        step="0.01" 
+                                        id="produto" 
                                         className="form-control" 
-                                        placeholder="Quantidade"
-                                        value={this.state.inputQtde}
-                                        onChange={(e) => this.setState({inputQtde: e.target.value})}
+                                        type="text" 
+                                        placeholder="Tecle enter aqui para selecionar um produto"
+                                        value={this.state.inputProduto}
+                                        onChange={(e) => this.setState({inputProduto: e.target.value})}
+                                        onBlur={()=>this.adicionarProduto()}
                                     />
                                 </div>
-                                <div className="col-md-6">
-                                    <div>Desconto</div>
-                                    <input 
-                                        id="desconto"
-                                        type="number" 
-                                        step="0.01" 
-                                        className="form-control" 
-                                        placeholder="Desconto"
-                                        value={this.state.inputDesconto}
-                                        onChange={(e) => this.setState({inputDesconto: e.target.value})}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row" style={{marginTop: '15px'}}>
-                                <div className="col-md-6">
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id="chkModoDireto" />
-                                        <label className="custom-control-label" htmlFor="chkModoDireto">Modo Direto</label>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                    <div className="col-md-6">
+                                        <div>Quantidade</div>
+                                        <input 
+                                            id="quantidade"
+                                            type="number" 
+                                            step="0.01" 
+                                            className="form-control" 
+                                            placeholder="Quantidade"
+                                            value={this.state.inputQtde}
+                                            onChange={(e) => this.setState({inputQtde: e.target.value})}
+                                        />
                                     </div>
-                                    <Button style={{marginTop: '15px'}} className="btn-success" onClick={()=> this.adicionarProduto()}>Adicionar</Button>
+                                    <div className="col-md-6">
+                                        <div>Desconto</div>
+                                        <input 
+                                            id="desconto"
+                                            type="number" 
+                                            step="0.01" 
+                                            className="form-control" 
+                                            placeholder="Desconto"
+                                            value={this.state.inputDesconto}
+                                            onChange={(e) => this.setState({inputDesconto: e.target.value})}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                    <div className="col-md-6">
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="chkModoDireto" />
+                                            <label className="custom-control-label" htmlFor="chkModoDireto">Modo Direto</label>
+                                        </div>
+                                        <Button style={{marginTop: '15px'}} className="btn-success" onClick={()=> this.adicionarProduto()}>Adicionar</Button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="quadro_totais" className="col-md-6">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td><h3>Subtotal: </h3></td>
-                                    <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularTotalBruto())}</h3></td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td><h3>Desconto: </h3></td>
-                                    <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularDesconto())}</h3></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Total: </h3></td>
-                                    <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularTotalLiquido())}</h3></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                    </div>
-                    
+                        <div id="quadro_totais" className="col-md-6">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><h3>Subtotal: </h3></td>
+                                        <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularTotalBruto())}</h3></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td><h3>Desconto: </h3></td>
+                                        <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularDesconto())}</h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h3>Total: </h3></td>
+                                        <td><h3>{Intl.NumberFormat('pt-BR', {style:'currency', currency: 'BRL'}).format(this.venda.CalcularTotalLiquido())}</h3></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>                    
                 </div>
 
                 <div id="botoes">
