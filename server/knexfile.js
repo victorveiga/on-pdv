@@ -5,11 +5,11 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: 'kbdados.cpyy953qenra.sa-east-1.rds.amazonaws.com',
+      host: 'localhost',
       port: '5432',
-      database: 'kbDados',
+      database: 'on-pdv',
       user:     'postgres',
-      password: '9L01oTaVoiDOJQ2S3Wjh'
+      password: '123'
     },
     pool: {
       min: 2,
