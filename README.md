@@ -23,8 +23,13 @@ Foi utilizado para o desenvolvimento as tecnologias NodeJs e React.
 #### 1. Instalar dependências:
 ![instalando dependências](https://github.com/victorveiga/on-pdv/blob/master/img/Screenshot_9.png)
 
-#### 2. Aplicar migrations:
+#### 2. Criar um banco PostgreSQL
+
+#### 3. Fazer a conexão do banco no arquivo knexfile.js
+![aplicando dependencias](https://github.com/victorveiga/on-pdv/blob/master/img/Screenshot_12.png)
+
+#### 4. Aplicar migrations:
 ![aplicando dependencias](https://github.com/victorveiga/on-pdv/blob/master/img/Screenshot_10.png)
 
-#### 3. Iniciar o serviço:
+#### 5. Iniciar o serviço:
 ![aplicando dependencias](https://github.com/victorveiga/on-pdv/blob/master/img/Screenshot_11.png)
